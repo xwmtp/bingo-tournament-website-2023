@@ -11,9 +11,9 @@ import { BiCalendar, BiSave } from "react-icons/bi";
 export const AboutPage: React.FC = () => {
   return (
     <AboutPageDiv>
-      <Container title={"Bingo Tournament 2022"} width={"70%"}>
+      <Container title={"Bingo Tournament 2023"} width={"70%"}>
         <AboutContent>
-          <p> Welcome to the 2022 Ocarina of Time Bingo Tournament!</p>
+          <p> Welcome to the 2023 Ocarina of Time Bingo Tournament!</p>
           <br />
 
           <h3>General info</h3>

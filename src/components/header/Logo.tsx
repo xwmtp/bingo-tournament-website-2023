@@ -12,14 +12,14 @@ export const Logo: React.FC<Props> = ({ className }) => {
     <FlexDiv className={className}>
       <ImageContainer>
         <ImageStyled
-          title="Bingo 2022"
+          title="Bingo 2023"
           alt="Bombbag logo"
           src="https://github.com/xwmtp/bingo2022/blob/assets/images/logos/bombbag.png?raw=true"
         />
       </ImageContainer>
 
       <WideScreenOnly>
-        <h3>2022</h3>
+        <h3>2023</h3>
       </WideScreenOnly>
     </FlexDiv>
   );
