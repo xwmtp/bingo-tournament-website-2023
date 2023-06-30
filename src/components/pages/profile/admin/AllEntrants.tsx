@@ -60,7 +60,7 @@ export const AllEntrants: React.FC = () => {
       <DownloadButtons>
         <DownloadButton
           disabled={pairingEntries.length === 0}
-          color="brightMossGreen"
+          color="mediumPrimary"
           onClick={() =>
             pairingEntries.length > 0 &&
             downloadText(
@@ -74,7 +74,7 @@ export const AllEntrants: React.FC = () => {
 
         <DownloadButton
           disabled={pairingEntries.length === 0}
-          color="brightMossGreen"
+          color="mediumPrimary"
           onClick={() =>
             pairingEntries.length > 0 &&
             downloadText(namesCsv, `entrants_${DateTime.local(DateTime.DATETIME_SHORT)}.csv`)

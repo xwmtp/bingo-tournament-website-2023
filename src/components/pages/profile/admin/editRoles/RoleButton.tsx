@@ -40,7 +40,7 @@ export const RoleButton: React.FC<Props> = ({ role, user, isEditable, className 
     queryClient.invalidateQueries("user");
   };
 
-  const color = userHasRole ? "brightMossGreen" : "lightGrey";
+  const color = userHasRole ? "mediumPrimary" : "lightGrey";
   return (
     <RoleButtonStyled
       mutationStatus={editRoleMutation.status}

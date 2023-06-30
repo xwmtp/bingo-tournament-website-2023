@@ -13,7 +13,7 @@ export const RecordButton: React.FC<Props> = ({ text, onClick, className }) => {
   return (
     <RecordButtonStyled
       label="Record"
-      color={"brightMossGreen"}
+      color={"mediumPrimary"}
       text={text}
       Icon={SaveIcon}
       onClick={onClick}

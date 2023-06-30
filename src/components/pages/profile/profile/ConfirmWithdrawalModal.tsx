@@ -39,7 +39,7 @@ export const ConfirmWithdrawalModal: React.FC<Props> = ({ visible, onClose }) =>
       <ConfirmButton
         mutationStatus={withdrawMutation.status}
         onIdleText={"Withdraw"}
-        color={"coral"}
+        color={"mediumSecondary"}
         size={"big"}
         onClick={() => withdrawMutation.mutate()}
       />

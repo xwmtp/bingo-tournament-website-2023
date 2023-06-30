@@ -36,7 +36,7 @@ const LoginOrUser: React.FC = () => {
 
 const HeaderStyled = styled(FlexDiv)`
   flex-shrink: 0;
-  background-color: ${Colors.mossGreen};
+  background-color: ${Colors.darkPrimary};
   padding: 0 0.6rem;
   height: 4.3rem;
 `;

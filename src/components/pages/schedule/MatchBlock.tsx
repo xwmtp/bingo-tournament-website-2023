@@ -133,7 +133,7 @@ const MatchBlockContainer = styled(Block)<{
     $displayAsLoggedInUser ? Colors.brightGrey : Colors.lightGrey};
   opacity: ${({ $displayAsFinished }) => ($displayAsFinished ? "30%" : "100%")};
   border: ${({ $displayAsInProgress }) => ($displayAsInProgress ? "0.24rem" : "0")} solid
-    ${Colors.brightMossGreen};
+    ${Colors.mediumPrimary};
 `;
 
 const Entrants = styled.div`

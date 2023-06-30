@@ -51,7 +51,7 @@ export const UserProfile: React.FC<Props> = ({ user }) => {
           <div>
             <LogoutButton
               size="normal"
-              color={"coral"}
+              color={"mediumSecondary"}
               onClick={() => {
                 logoutMutation.mutate();
                 navigate("/");
@@ -63,7 +63,7 @@ export const UserProfile: React.FC<Props> = ({ user }) => {
             {isEntrant(user) && tournamentSettings.CAN_WITHDRAW && (
               <WithdrawButton
                 size="normal"
-                color={"coral"}
+                color={"mediumSecondary"}
                 onClick={() => setShowWithdrawModal(true)}
               >
                 Withdraw from tournament
@@ -99,7 +99,7 @@ const NameAndRoles = styled.div`
 `;
 
 const Role = styled.p`
-  color: ${Colors.brighterMossGreen};
+  color: ${Colors.lightPrimary};
 `;
 
 const RacetimeButtonStyled = styled(RacetimeButton)`

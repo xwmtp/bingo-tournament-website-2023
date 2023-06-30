@@ -75,7 +75,7 @@ export const CustomResult: React.FC<Props> = ({ match, setCustomResultMutation }
         disabled={!updateRestreamMatch}
         mutationStatus={setCustomResultMutation.status}
         onIdleText={"Record custom result"}
-        color={"coral"}
+        color={"mediumSecondary"}
         size={"big"}
         onClick={() => updateRestreamMatch && setCustomResultMutation.mutate(updateRestreamMatch)}
       />

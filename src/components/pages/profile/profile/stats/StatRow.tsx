@@ -29,5 +29,5 @@ const StatName = styled.p`
 `;
 
 const Stat = styled.p`
-  color: ${Colors.brighterMossGreen};
+  color: ${Colors.lightPrimary};
 `;

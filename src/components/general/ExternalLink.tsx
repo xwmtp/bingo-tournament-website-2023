@@ -25,5 +25,5 @@ export const ExternalLink: React.FC<Props> = ({ url, color, children, className 
 
 const UrlLink = styled.a<{ $color?: ColorName }>`
   font-weight: bold;
-  color: ${({ $color }) => ($color ? Colors[$color] : Colors.brighterMossGreen)};
+  color: ${({ $color }) => ($color ? Colors[$color] : Colors.lightPrimary)};
 `;

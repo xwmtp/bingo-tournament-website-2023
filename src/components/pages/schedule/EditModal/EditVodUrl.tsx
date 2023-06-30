@@ -55,7 +55,7 @@ export const EditVodUrl: React.FC<Props> = ({ match, setVodMutation, deleteVodMu
         disabled={!updateVodMatch}
         mutationStatus={setVodMutation.status}
         onIdleText={"Set vod"}
-        color={"brightMossGreen"}
+        color={"mediumPrimary"}
         size={"big"}
         onClick={() => updateVodMatch && setVodMutation.mutate(updateVodMatch)}
       />
@@ -64,7 +64,7 @@ export const EditVodUrl: React.FC<Props> = ({ match, setVodMutation, deleteVodMu
         disabled={!match.vodUrl}
         mutationStatus={deleteVodMutation.status}
         onIdleText={"Remove vod"}
-        color={"coral"}
+        color={"mediumSecondary"}
         size={"big"}
         onClick={() => match.vodUrl && deleteVodMutation.mutate(match.id)}
       />

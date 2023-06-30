@@ -89,7 +89,7 @@ export const RecordModal: React.FC<Props> = ({ match, visible, onClose }) => {
           disabled={!racetimeId}
           mutationStatus={updateRacetimeIdMutation.status}
           onIdleText={"Record"}
-          color={"brightMossGreen"}
+          color={"mediumPrimary"}
           size={"big"}
           onClick={() => updateMatch && updateRacetimeIdMutation.mutate(updateMatch)}
         />

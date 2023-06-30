@@ -91,7 +91,7 @@ export const EditModal: React.FC<Props> = ({ match, visible, onClose }) => {
           disabled={!validDateTimeInput}
           mutationStatus={updateTimeMutation.status}
           onIdleText={"Change"}
-          color={"brightMossGreen"}
+          color={"mediumPrimary"}
           size={"big"}
           onClick={() => validDateTimeInput && updateTimeMutation.mutate(updateTimeMatch)}
         />

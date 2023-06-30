@@ -27,7 +27,7 @@ export const DeleteMatch: React.FC<Props> = ({ match, deleteMatchMutation }) => 
       <MutationButtonStyled
         mutationStatus={deleteMatchMutation.status}
         onIdleText={"DELETE MATCH"}
-        color={"coral"}
+        color={"mediumSecondary"}
         size={"big"}
         onClick={() => deleteMatchMutation.mutate([match.id])}
       />

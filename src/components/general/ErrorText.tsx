@@ -11,6 +11,6 @@ export const ErrorText: React.FC<Props> = ({ children }) => {
 };
 
 const ErrorStyled = styled.p`
-  color: ${Colors.brightCoral};
+  color: ${Colors.lightSecondary};
   margin: 0.3rem 0;
 `;

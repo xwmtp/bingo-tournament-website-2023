@@ -20,6 +20,6 @@ const InputStyled = styled.input`
   outline: none;
 
   :focus-visible {
-    border-color: ${Colors.brightMossGreen};
+    border-color: ${Colors.mediumPrimary};
   }
 `;

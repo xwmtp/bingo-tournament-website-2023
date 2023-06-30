@@ -74,7 +74,7 @@ const TabOptionDiv = styled.div<{
   $isActive: boolean;
   $fontSize?: string;
 }>`
-  background-color: ${({ $isActive }) => ($isActive ? Colors.brightMossGreen : "none")};
+  background-color: ${({ $isActive }) => ($isActive ? Colors.mediumPrimary : "none")};
   padding: 0.6rem;
   font-size: ${({ $fontSize }) => $fontSize ?? "1.3rem"};
   display: flex;

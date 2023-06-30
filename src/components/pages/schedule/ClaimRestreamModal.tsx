@@ -64,7 +64,7 @@ export const ClaimRestreamModal: React.FC<Props> = ({ match, visible, onClose })
           disabled={!updateRestreamMatch}
           mutationStatus={updateRestreamMutation.status}
           onIdleText={"Set restream"}
-          color={"brightMossGreen"}
+          color={"mediumPrimary"}
           size={"big"}
           onClick={() => updateRestreamMatch && updateRestreamMutation.mutate(updateRestreamMatch)}
         />

@@ -58,7 +58,7 @@ export const ConfirmSignupModal: React.FC<Props> = ({ visible, onClose }) => {
       <ConfirmButton
         mutationStatus={signUpMutation.status}
         onIdleText={"Sign up"}
-        color={"brightMossGreen"}
+        color={"mediumPrimary"}
         size={"big"}
         onClick={() => signUpMutation.mutate()}
       />
@@ -72,5 +72,5 @@ const ConfirmButton = styled(MutationButton)`
 
 const Link = styled(NavLink)`
   font-weight: bold;
-  color: ${Colors.brighterMossGreen};
+  color: ${Colors.lightPrimary};
 `;

@@ -25,5 +25,5 @@ export const InternalLink: React.FC<Props> = ({ to, color, newWindow, children }
 
 const Link = styled(NavLink)<{ $color?: ColorName }>`
   font-weight: bold;
-  color: ${({ $color }) => ($color ? Colors[$color] : Colors.brighterMossGreen)};
+  color: ${({ $color }) => ($color ? Colors[$color] : Colors.lightPrimary)};
 `;

@@ -27,7 +27,7 @@ export const VodButton: React.FC<Props> = ({ text, matchResult, className }) => 
       text={text ?? "Vod"}
       Icon={Icon}
       url={matchResult?.vodUrl}
-      color={"coral"}
+      color={"mediumSecondary"}
       className={className}
     />
   );

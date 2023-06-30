@@ -51,7 +51,7 @@ export const ConfirmMatchesToAddModal: React.FC<Props> = ({
         <MutationButtonStyled
           mutationStatus={addMatchesMutation.status}
           onIdleText="Confirm"
-          color={"brightMossGreen"}
+          color={"mediumPrimary"}
           size={"big"}
           onClick={() => addMatchesMutation.mutate(matchesToAdd)}
         />

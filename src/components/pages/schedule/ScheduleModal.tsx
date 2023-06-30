@@ -65,7 +65,7 @@ export const ScheduleModal: React.FC<Props> = ({ match, visible, onClose }) => {
         <ConfirmButton
           disabled={!validInput}
           mutationStatus={matchMutation.status}
-          color={"brightMossGreen"}
+          color={"mediumPrimary"}
           size={"big"}
           onClick={() => validInput && matchMutation.mutate(updateMatch)}
         />

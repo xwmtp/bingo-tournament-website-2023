@@ -69,7 +69,7 @@ export const EditRestream: React.FC<Props> = ({
         disabled={!updateRestreamMatch}
         mutationStatus={setRestreamMutation.status}
         onIdleText={"Set restream"}
-        color={"brightMossGreen"}
+        color={"mediumPrimary"}
         size={"big"}
         onClick={() => updateRestreamMatch && setRestreamMutation.mutate(updateRestreamMatch)}
       />
@@ -78,7 +78,7 @@ export const EditRestream: React.FC<Props> = ({
         disabled={!match.restreamChannel}
         mutationStatus={deleteRestreamMutation.status}
         onIdleText={"Remove restream"}
-        color={"coral"}
+        color={"mediumSecondary"}
         size={"big"}
         onClick={() => match.restreamChannel && deleteRestreamMutation.mutate(match.id)}
       />

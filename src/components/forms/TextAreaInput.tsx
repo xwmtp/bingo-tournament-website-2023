@@ -20,6 +20,6 @@ const InputStyled = styled.textarea`
   outline: none;
 
   :focus-visible {
-    border-color: ${Colors.brightMossGreen};
+    border-color: ${Colors.mediumPrimary};
   }
 `;

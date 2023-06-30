@@ -69,7 +69,7 @@ export const AddMatchesManualInput: React.FC<Props> = ({
       <AddMatchButtonDiv>
         <Button
           disabled={!validManualInput || maxMatchesReached}
-          color={"coral"}
+          color={"mediumSecondary"}
           onClick={() => {
             validManualInput &&
               addMatches([

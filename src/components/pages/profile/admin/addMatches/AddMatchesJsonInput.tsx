@@ -92,7 +92,7 @@ export const AddMatchesJsonInput: React.FC<Props> = ({
       {isJsonError && <ErrorText>Invalid pair json input.</ErrorText>}
       <AddMatchButton
         disabled={!isValidInput || maxMatchesReached}
-        color={"coral"}
+        color={"mediumSecondary"}
         onClick={() => isValidInput && addJsonMatches()}
       >
         +

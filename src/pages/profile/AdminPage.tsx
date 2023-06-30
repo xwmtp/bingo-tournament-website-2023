@@ -46,12 +46,12 @@ export const AdminPage: React.FC = () => {
       <Container title={"Tools"} size="small">
         <LinkButtons>
           <Link to="/pairing">
-            <LinkButton size="big" color="brightMossGreen">
+            <LinkButton size="big" color="mediumPrimary">
               Pairings
             </LinkButton>
           </Link>
           <Link to="/stats">
-            <LinkButton size="big" color="brightMossGreen">
+            <LinkButton size="big" color="mediumPrimary">
               Stats
             </LinkButton>
           </Link>

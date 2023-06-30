@@ -26,7 +26,7 @@ const SpinnerRegular = styled.div`
     border-top: var(--spinner-thickness-normal) solid rgba(154, 203, 185, 0.2);
     border-right: var(--spinner-thickness-normal) solid rgba(154, 203, 185, 0.2);
     border-bottom: var(--spinner-thickness-normal) solid rgba(154, 203, 185, 0.2);
-    border-left: var(--spinner-thickness-normal) solid ${Colors.brighterMossGreen};
+    border-left: var(--spinner-thickness-normal) solid ${Colors.lightPrimary};
     -webkit-transform: translateZ(0);
     -ms-transform: translateZ(0);
     transform: translateZ(0);
@@ -68,6 +68,6 @@ const SpinnerSmall = styled(SpinnerRegular)`
     border-top: var(--spinner-thickness-small) solid rgba(154, 203, 185, 0.2);
     border-right: var(--spinner-thickness-small) solid rgba(154, 203, 185, 0.2);
     border-bottom: var(--spinner-thickness-small) solid rgba(154, 203, 185, 0.2);
-    border-left: var(--spinner-thickness-small) solid ${Colors.brighterMossGreen};
+    border-left: var(--spinner-thickness-small) solid ${Colors.lightPrimary};
   }
 `;

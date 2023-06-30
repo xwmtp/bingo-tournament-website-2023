@@ -37,5 +37,5 @@ export const ScheduledMatches: React.FC<Props> = ({ matches, displayStatusOnMatc
 const Timezone = styled.p`
   font-size: 90%;
   margin-bottom: 0.7rem;
-  color: ${Colors.brighterMossGreen};
+  color: ${Colors.lightPrimary};
 `;

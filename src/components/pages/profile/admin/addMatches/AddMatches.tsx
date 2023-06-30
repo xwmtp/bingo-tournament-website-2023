@@ -57,7 +57,7 @@ export const AddMatches: React.FC = () => {
 
       <MatchesToAdd matchesToAdd={matchesToAdd} onRemoveMatch={removeMatch} />
       {matchesToAdd.length > 0 && (
-        <AddMatchesButton color={"brightMossGreen"} onClick={() => setShowConfirmModal(true)}>
+        <AddMatchesButton color={"mediumPrimary"} onClick={() => setShowConfirmModal(true)}>
           {`Add ${matchesToAdd.length} match${matchesToAdd.length > 1 ? "es" : ""}`}
         </AddMatchesButton>
       )}

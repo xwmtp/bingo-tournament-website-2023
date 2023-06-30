@@ -1,9 +1,9 @@
 import { createGlobalStyle } from "styled-components";
 
 export const Colors = {
-  mossGreen: "#6e5696",
-  brightMossGreen: "#8764c9",
-  brighterMossGreen: "#a47fe8",
+  darkPrimary: "#6e5696",
+  mediumPrimary: "#8764c9",
+  lightPrimary: "#a47fe8",
   darkGrey: "#3A4040",
   mediumGrey: "#454B4B",
   lightGrey: "#535959",
@@ -14,9 +14,9 @@ export const Colors = {
   racetimeGreen: "#26DB9AFF",
   twitchPurple: "#9146FF",
   brightTwitchPurple: "#9c79da",
-  coral: "#a15f4f",
-  brightCoral: "#ef8b73",
-  jeansBlue: "#5483af",
+  mediumSecondary: "#a15f4f",
+  lightSecondary: "#ef8b73",
+  mediumTernary: "#5483af",
 } as const;
 
 export type ColorName = keyof typeof Colors;

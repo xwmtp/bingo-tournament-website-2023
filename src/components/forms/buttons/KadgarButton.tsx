@@ -24,7 +24,7 @@ export const KadgarButton: React.FC<Props> = ({ users, text, className }) => {
       text={text ?? "Kadgar"}
       Icon={KadgarIcon}
       url={url}
-      color={"jeansBlue"}
+      color={"mediumTernary"}
       className={className}
     />
   );

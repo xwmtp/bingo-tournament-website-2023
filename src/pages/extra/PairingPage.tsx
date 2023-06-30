@@ -65,14 +65,14 @@ export const PairingPage: React.FC = () => {
           <FlexDiv>
             <ControlButton
               disabled={numberOfVisiblePairs === 0}
-              color="coral"
+              color="mediumSecondary"
               onClick={() => setNumberOfVisiblePairs(0)}
             >
               Hide all
             </ControlButton>
             <ControlButton
               disabled={!nextPair}
-              color="brightMossGreen"
+              color="mediumPrimary"
               onClick={() => setNumberOfVisiblePairs(pairs.length)}
             >
               Show all
@@ -81,7 +81,7 @@ export const PairingPage: React.FC = () => {
 
           <ControlButton
             disabled={!nextPair}
-            color="jeansBlue"
+            color="mediumTernary"
             onClick={() =>
               setNumberOfVisiblePairs((prevState) => Math.min(prevState + 1, pairs.length))
             }

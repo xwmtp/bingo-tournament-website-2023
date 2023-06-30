@@ -16,7 +16,7 @@ export const ScheduleButton: React.FC<Props> = ({ text, onClick, className }) =>
       text={text ?? "Pick time"}
       Icon={CalendarIcon}
       onClick={onClick}
-      color={"coral"}
+      color={"mediumSecondary"}
       className={className}
     />
   );

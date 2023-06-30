@@ -13,7 +13,7 @@ export const DeleteButton: React.FC<Props> = ({ text, onClick, className }) => {
   return (
     <DeleteButtonStyled
       label="Delete"
-      color={"coral"}
+      color={"mediumSecondary"}
       text={text}
       Icon={TrashIcon}
       onClick={onClick}
