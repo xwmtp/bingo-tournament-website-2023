@@ -19,10 +19,10 @@ export const AboutPage: React.FC = () => {
           <h3>General info</h3>
           <List>
             <ListItem>
-              The tournament will start on <strong>Monday, July 18th.</strong>
+              The tournament will start on <strong>?</strong>
             </ListItem>
             <ListItem>
-              Sign up will close on <strong>Friday, July 15th, 23:59 UTC.</strong>
+              Sign up will close on <strong>?</strong>
             </ListItem>
             <ListItem>
               This is a regular{" "}
