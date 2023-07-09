@@ -5,10 +5,10 @@ import { Spinner } from "../components/general/Spinner";
 import { useAllEntrants } from "../api/entrantsApi";
 import { useMatchResults } from "../api/matchesApi";
 import { NothingToDisplay } from "../components/general/NothingToDisplay";
-import { Bracket } from "../components/pages/leaderboard/Bracket";
-import { parseToBracketRounds } from "../domain/BracketSetup";
-import { bracketSetup, leaderboardSettings, websiteSettings } from "../Settings";
+import { bracketSetup, leaderboardSettings, robinPotsSetup, websiteSettings } from "../Settings";
 import { mockBracketSetup } from "../domain/mocks/MockData";
+import { RobinPots } from "../components/pages/leaderboard/RobinPots";
+import { parseToRobinPots } from "../domain/RobinPotsSetup";
 
 export const LeaderboardPage: React.FC = () => {
   const { data: allEntrants, isLoading: isLoadingEntrants } = useAllEntrants();
@@ -39,9 +39,11 @@ export const LeaderboardPage: React.FC = () => {
     )
   );
   // const bracketRounds = parseToBracketRounds(bracketSetupData, allEntrants, matchResults);
+  const robinPots = parseToRobinPots(robinPotsSetup, allEntrants);
 
   return (
     <>
+      <RobinPots pots={robinPots} />
       {/*{bracketRounds.length > 0 && <Bracket bracketRounds={bracketRounds} />}*/}
       <Leaderboard allEntrants={allEntrants} allResults={relevantMatchResults} />
     </>
