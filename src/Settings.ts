@@ -1,5 +1,4 @@
 import { BracketSetup } from "./domain/BracketSetup";
-import { RobinPotsSetup } from "./domain/RobinPotsSetup";
 
 export const tournamentSettings = {
   RACETIME_CATEGORY: "oot",
@@ -41,13 +40,6 @@ export const bracketSetup: BracketSetup = {
   ],
 };
 
-// export const robinPotsSetup: RobinPotsSetup = [
-//   { potName: "Pot 1", playerIds: ["XGzr7pBMny3kqgyE", "kzM65aWX6b31y8q0"] },
-//   { potName: "Pot 2", playerIds: ["ZbpNAaBvn5BJkg04", "5rNGD3DKVaB9blOy"] },
-//   { potName: "Pot 3", playerIds: ["Va0eMongz6Wl9pyJ", "jQbq4dBp7yWvlrG0"] },
-//   { potName: "Pot 4", playerIds: ["rZyM4orRvRoqDJX0", "LxldAMBlYV3aOP57"] },
-// ];
-
 export const robinPotsSetup = {
   numberOfPots: 4,
-}
+};

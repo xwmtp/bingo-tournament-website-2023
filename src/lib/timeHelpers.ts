@@ -17,3 +17,9 @@ export const calculateMedian = (timesInSeconds: number[]): number | undefined =>
 export const secondsToHms = (seconds: number): string => {
   return Duration.fromObject({ seconds: seconds }).toFormat("h:mm:ss");
 };
+
+export const hmsToSeconds = (hmsString: string): number => {
+  const [hours, minutes, seconds] = hmsString.split(":").map(Number);
+  const duration = Duration.fromObject({ hours, minutes, seconds });
+  return duration.as("seconds");
+};

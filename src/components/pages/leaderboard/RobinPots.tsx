@@ -1,36 +1,41 @@
 import React, { useMemo } from "react";
-import { useUser } from "../../../api/userApi";
 import { useRacetimeLeaderboard } from "../../../api/racetimeLeaderboardApi";
-import { sortLeaderboardEntries, toLeaderboardEntries } from "../../../domain/Leaderboard";
 import { Container } from "../../Container";
 import { NothingToDisplay } from "../../general/NothingToDisplay";
 import { UserDisplay } from "../../UserDisplay";
-import { WideScreenOnly } from "../../divs/WideScreenOnly";
-import { secondsToHms } from "../../../lib/timeHelpers";
 import styled from "styled-components";
 import { Block } from "../../Block";
 import { Colors } from "../../../GlobalStyle";
 import { FlexDiv } from "../../divs/FlexDiv";
-import { RobinPots } from "../../../domain/RobinPotsSetup";
+import { User } from "../../../domain/User";
+import { mapToRobinPotPlayerEntry, parseToRobinPots } from "../../../domain/RobinPots";
+import { robinPotsSetup } from "../../../Settings";
 
 interface Props {
-  pots: RobinPots;
+  allEntrants: User[];
 }
 
-export const RobinPots: React.FC<Props> = ({ pots }) => {
-  const { data: user } = useUser();
-
+export const RobinPots: React.FC<Props> = ({ allEntrants }) => {
   const { data: racetimeLeaderboard } = useRacetimeLeaderboard();
+
+  console.log("lb", racetimeLeaderboard);
 
   const title = "Leaderboard";
 
   const sortedEntries = useMemo(() => {
-    if (allEntrants && allResults) {
-      const entries = toLeaderboardEntries(allEntrants, allResults, racetimeLeaderboard);
-      return sortLeaderboardEntries(entries);
+    if (allEntrants && racetimeLeaderboard) {
+      const entries = allEntrants.map((user) =>
+        mapToRobinPotPlayerEntry(user, racetimeLeaderboard)
+      );
+      return entries.sort(
+        (a, b) =>
+          (a.racetimeStats?.leaderboardScore ?? 0) - (b.racetimeStats?.leaderboardScore ?? 0)
+      );
     }
     return [];
-  }, [allEntrants, allResults, racetimeLeaderboard]);
+  }, [allEntrants, racetimeLeaderboard]);
+
+  const robinPots = parseToRobinPots(robinPotsSetup, sortedEntries);
 
   if (sortedEntries.length === 0) {
     return (
@@ -44,67 +49,36 @@ export const RobinPots: React.FC<Props> = ({ pots }) => {
 
   return (
     <Container title={title}>
-      <LeaderboardHeader>
-        <HiddenRankAndUser>
-          <Rank>0</Rank>
-          <UserDisplay size="big" user={sortedEntries[0].user} />
-        </HiddenRankAndUser>
-
-        <Number>Points</Number>
-        <WideScreenOnly>
-          <Time>Median</Time>
-        </WideScreenOnly>
-        <Number>Rounds</Number>
-        <WideScreenOnly>
-          <Number>Dnf</Number>
-        </WideScreenOnly>
-      </LeaderboardHeader>
-
-      {sortedEntries.map((entry, index) => {
+      {robinPots.map((robinPot, index) => {
         return (
-          <LeaderboardEntryBlock
-            key={index}
-            $displayAsLoggedInUser={!!user && entry.user.id === user.id}
-          >
-            <RankAndUser>
-              <Rank>{index + 1}</Rank>
-              <UserDisplay size="big" user={entry.user} />
-            </RankAndUser>
-
-            <Number>{entry.points}</Number>
-
-            <WideScreenOnly>
-              <Time>{entry.median ? secondsToHms(entry.median) : "--:--:--"}</Time>
-            </WideScreenOnly>
-
-            <Number>{entry.roundsPlayed}</Number>
-
-            <WideScreenOnly>
-              <Number>{entry.forfeits}</Number>
-            </WideScreenOnly>
-          </LeaderboardEntryBlock>
+          <>
+            <h2>{`Pot ${index + 1}`}</h2>
+            {robinPot.map((entry) => {
+              return (
+                <LeaderboardEntryBlock
+                  key={index}
+                  $displayAsLoggedInUser={false} //todo
+                >
+                  <RankAndUser>
+                    <Rank>{index + 1}</Rank>
+                    <UserDisplay size="big" user={entry.user} />
+                  </RankAndUser>
+                </LeaderboardEntryBlock>
+              );
+            })}
+          </>
         );
       })}
     </Container>
   );
 };
 
-const LeaderboardHeader = styled(Block)`
-  justify-content: space-between;
-  background-color: transparent;
-  margin-top: 0;
-  font-weight: bold;
-  font-size: 1rem;
-  padding-top: 0.35rem;
-  padding-bottom: 0.35rem;
-`;
-
 const LeaderboardEntryBlock = styled(Block)<{
   $displayAsLoggedInUser: boolean;
 }>`
   justify-content: space-between;
   background-color: ${({ $displayAsLoggedInUser }) =>
-          $displayAsLoggedInUser ? Colors.brightGrey : Colors.lightGrey};
+    $displayAsLoggedInUser ? Colors.brightGrey : Colors.lightGrey};
   font-size: 1.1rem;
   margin-top: 0.5rem;
   padding-top: 0.35rem;
@@ -113,20 +87,6 @@ const LeaderboardEntryBlock = styled(Block)<{
 
 const RankAndUser = styled(FlexDiv)`
   justify-content: flex-start;
-`;
-
-const HiddenRankAndUser = styled(RankAndUser)`
-  visibility: hidden;
-`;
-
-const Number = styled.p`
-  text-align: center;
-  min-width: 6rem;
-`;
-
-const Time = styled.p`
-  text-align: center;
-  min-width: 6rem;
 `;
 
 const Rank = styled.p`
