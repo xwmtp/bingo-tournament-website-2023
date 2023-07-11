@@ -5,14 +5,13 @@ import { Spinner } from "../components/general/Spinner";
 import { useAllEntrants } from "../api/entrantsApi";
 import { useMatchResults } from "../api/matchesApi";
 import { NothingToDisplay } from "../components/general/NothingToDisplay";
-import { bracketSetup, leaderboardSettings, websiteSettings } from "../Settings";
-import { mockBracketSetup } from "../domain/mocks/MockData";
+import { leaderboardSettings } from "../Settings";
 import { RobinPots } from "../components/pages/leaderboard/RobinPots";
 
 export const LeaderboardPage: React.FC = () => {
   const { data: allEntrants, isLoading: isLoadingEntrants } = useAllEntrants();
   const { data: matchResults, isLoading: isLoadingMatches } = useMatchResults();
-  const bracketSetupData = websiteSettings.USE_MOCK_DATA ? mockBracketSetup : bracketSetup;
+  // const bracketSetupData = websiteSettings.USE_MOCK_DATA ? mockBracketSetup : bracketSetup;
 
   const pageTitle = "Leaderboard";
 
@@ -43,7 +42,7 @@ export const LeaderboardPage: React.FC = () => {
     <>
       <RobinPots allEntrants={allEntrants} />
       {/*{bracketRounds.length > 0 && <Bracket bracketRounds={bracketRounds} />}*/}
-      <Leaderboard allEntrants={allEntrants} allResults={relevantMatchResults} />
+      {/*<Leaderboard allEntrants={allEntrants} allResults={relevantMatchResults} />*/}
     </>
   );
 };

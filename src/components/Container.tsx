@@ -7,6 +7,7 @@ interface Props {
   size?: "normal" | "small";
   className?: string;
   width?: string;
+  contentGap?: number;
   backgroundColor?: ColorName;
 }
 
@@ -15,6 +16,7 @@ export const Container: React.FC<Props> = ({
   size = "normal",
   width,
   backgroundColor,
+  contentGap,
   className,
   children,
 }) => {
@@ -26,7 +28,7 @@ export const Container: React.FC<Props> = ({
         </ContainerHeader>
       )}
 
-      <Content $backgroundColor={backgroundColor} $hasHeader={!!title}>
+      <Content $backgroundColor={backgroundColor} $hasHeader={!!title} $contentGap={contentGap}>
         {children}
       </Content>
     </ContainerStyled>
@@ -47,10 +49,17 @@ const ContainerHeader = styled.div<{ $backgroundColor?: ColorName }>`
   box-shadow: 0.3rem 0.3rem 0.3rem ${Colors.boxShadowGrey};
 `;
 
-const Content = styled.div<{ $backgroundColor?: ColorName; $hasHeader?: boolean }>`
+const Content = styled.div<{
+  $backgroundColor?: ColorName;
+  $hasHeader?: boolean;
+  $contentGap?: number;
+}>`
   background-color: ${({ $backgroundColor }) =>
     $backgroundColor ? Colors[$backgroundColor] : Colors.mediumGrey};
   padding: 1.2rem;
   border-radius: ${({ $hasHeader }) => ($hasHeader ? "0 0" : "0.6rem 0.6rem")} 0.6rem 0.6rem;
   box-shadow: 0.3rem 0.3rem 0.3rem ${Colors.boxShadowGrey};
+  display: flex;
+  flex-direction: column;
+  gap: ${({ $contentGap }) => ($contentGap ? `${$contentGap}rem` : 0)};
 `;

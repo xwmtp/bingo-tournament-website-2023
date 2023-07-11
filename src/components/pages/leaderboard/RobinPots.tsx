@@ -8,8 +8,9 @@ import { Block } from "../../Block";
 import { Colors } from "../../../GlobalStyle";
 import { FlexDiv } from "../../divs/FlexDiv";
 import { User } from "../../../domain/User";
-import { mapToRobinPotPlayerEntry, parseToRobinPots } from "../../../domain/RobinPots";
+import { RobinPotPlayerEntry, splitToRobinPots } from "../../../domain/RobinPots";
 import { robinPotsSetup } from "../../../Settings";
+import { WideScreenOnly } from "../../divs/WideScreenOnly";
 
 interface Props {
   allEntrants: User[];
@@ -18,26 +19,33 @@ interface Props {
 export const RobinPots: React.FC<Props> = ({ allEntrants }) => {
   const { data: racetimeLeaderboard } = useRacetimeLeaderboard();
 
-  console.log("lb", racetimeLeaderboard);
+  const title = "Phase 1";
 
-  const title = "Leaderboard";
-
-  const sortedEntries = useMemo(() => {
+  const sortedPotEntries: RobinPotPlayerEntry[] = useMemo(() => {
     if (allEntrants && racetimeLeaderboard) {
-      const entries = allEntrants.map((user) =>
-        mapToRobinPotPlayerEntry(user, racetimeLeaderboard)
-      );
-      return entries.sort(
+      const entries = allEntrants.map((user, index) => {
+        const racetimeLeaderboardEntry = racetimeLeaderboard[user.id];
+        return {
+          user,
+          racetimeStats: racetimeLeaderboardEntry,
+          rank: index + 1,
+        };
+      });
+      const sortedEntries = entries.sort(
         (a, b) =>
-          (a.racetimeStats?.leaderboardScore ?? 0) - (b.racetimeStats?.leaderboardScore ?? 0)
+          (b.racetimeStats?.leaderboardScore ?? 0) - (a.racetimeStats?.leaderboardScore ?? 0)
       );
+      return sortedEntries.map((entry, index) => ({
+        ...entry,
+        rank: index + 1,
+      }));
     }
     return [];
   }, [allEntrants, racetimeLeaderboard]);
 
-  const robinPots = parseToRobinPots(robinPotsSetup, sortedEntries);
+  const robinPots = splitToRobinPots(robinPotsSetup, sortedPotEntries);
 
-  if (sortedEntries.length === 0) {
+  if (sortedPotEntries.length === 0) {
     return (
       <Container title={title}>
         <NothingToDisplay>
@@ -48,32 +56,36 @@ export const RobinPots: React.FC<Props> = ({ allEntrants }) => {
   }
 
   return (
-    <Container title={title}>
+    <Container title={title} contentGap={2}>
       {robinPots.map((robinPot, index) => {
         return (
-          <>
-            <h2>{`Pot ${index + 1}`}</h2>
+          <div key={index}>
+            <PotTitle>{`Pot ${index + 1}`}</PotTitle>
             {robinPot.map((entry) => {
               return (
-                <LeaderboardEntryBlock
+                <RobinPotEntry
                   key={index}
                   $displayAsLoggedInUser={false} //todo
                 >
                   <RankAndUser>
-                    <Rank>{index + 1}</Rank>
+                    <Rank>{entry.rank}</Rank>
                     <UserDisplay size="big" user={entry.user} />
                   </RankAndUser>
-                </LeaderboardEntryBlock>
+
+                  <WideScreenOnly>
+                    <Number>{entry.racetimeStats?.leaderboardScore}</Number>
+                  </WideScreenOnly>
+                </RobinPotEntry>
               );
             })}
-          </>
+          </div>
         );
       })}
     </Container>
   );
 };
 
-const LeaderboardEntryBlock = styled(Block)<{
+const RobinPotEntry = styled(Block)<{
   $displayAsLoggedInUser: boolean;
 }>`
   justify-content: space-between;
@@ -85,6 +97,8 @@ const LeaderboardEntryBlock = styled(Block)<{
   padding-bottom: 0.35rem;
 `;
 
+const PotTitle = styled.h3``;
+
 const RankAndUser = styled(FlexDiv)`
   justify-content: flex-start;
 `;
@@ -93,4 +107,9 @@ const Rank = styled.p`
   text-align: center;
   min-width: 2rem;
   margin-right: 1.5rem;
+`;
+
+const Number = styled.p`
+  text-align: center;
+  min-width: 6rem;
 `;

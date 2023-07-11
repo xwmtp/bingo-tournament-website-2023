@@ -10,3 +10,11 @@ export function chunkArray<T>(items: T[], chunkSize: number): T[][] {
   }
   return chunkArray;
 }
+
+export function chunkArrayByNumber<T>(array: T[], numberOfChunks: number): T[][] {
+  if (numberOfChunks < 1) {
+    throw Error("Number of chunks has to be an integer of 1 or larger");
+  }
+  const size = Math.ceil(array.length / numberOfChunks);
+  return Array.from({ length: numberOfChunks }, (v, i) => array.slice(i * size, i * size + size));
+}
