@@ -1,4 +1,5 @@
 import { BracketSetup } from "./domain/BracketSetup";
+import { RobinGroupsSetup, RobinPotSetup } from "./domain/RoundRobin";
 
 export const tournamentSettings = {
   RACETIME_CATEGORY: "oot",
@@ -40,6 +41,36 @@ export const bracketSetup: BracketSetup = {
   ],
 };
 
-export const robinPotsSetup = {
+export const robinPotsSetup: RobinPotSetup = {
   numberOfPots: 4,
 };
+
+export const robinGroupsSetup: RobinGroupsSetup = [
+  {
+    groupName: "Group Armos",
+    entrants: [
+      { playerId: "XGzr7pBMny3kqgyE" },
+      { playerId: "d17DexWEKg3ak64R" },
+      { playerId: "wdm1LPWjGABEnVx6" },
+      { playerId: "VXY0eABdn7oLKPnz" },
+    ],
+  },
+  {
+    groupName: "Group Bombs",
+    entrants: [
+      { playerId: "ZbpNAaBvn5BJkg04" },
+      { playerId: "ZVa0eMonnbol9pyJ" },
+      { playerId: "rZyM4orRvRoqDJX0" },
+      { playerId: "pRbOXG3ykOWZVKq1" },
+    ],
+  },
+  {
+    groupName: "Group Chus",
+    entrants: [
+      { playerId: "XGzr7pBMny3kqgyE" },
+      { playerId: "d17DexWEKg3ak64R" },
+      { playerId: "wdm1LPWjGABEnVx6" },
+      { playerId: "VXY0eABdn7oLKPnz" },
+    ],
+  },
+];

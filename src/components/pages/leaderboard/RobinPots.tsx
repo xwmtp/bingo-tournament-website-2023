@@ -8,7 +8,7 @@ import { Block } from "../../Block";
 import { Colors } from "../../../GlobalStyle";
 import { FlexDiv } from "../../divs/FlexDiv";
 import { User } from "../../../domain/User";
-import { RobinPotPlayerEntry, splitToRobinPots } from "../../../domain/RobinPots";
+import { RobinPotPlayerEntry, splitToRobinPots } from "../../../domain/RoundRobin";
 import { robinPotsSetup } from "../../../Settings";
 import { WideScreenOnly } from "../../divs/WideScreenOnly";
 
