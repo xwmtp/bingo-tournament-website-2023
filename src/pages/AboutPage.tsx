@@ -19,10 +19,10 @@ export const AboutPage: React.FC = () => {
           <h3>General info</h3>
           <List>
             <ListItem>
-              The tournament will start on <strong>?</strong>
+              The tournament will start on <strong>Monday, August 13th.</strong>
             </ListItem>
             <ListItem>
-              Sign up will close on <strong>?</strong>
+              Sign up will close on <strong>Friday, August 11th, at 11:59pm UTC.</strong>
             </ListItem>
             <ListItem>
               This is a regular{" "}
@@ -34,8 +34,8 @@ export const AboutPage: React.FC = () => {
               progress.
             </ListItem>
             <ListItem>
-              The tournament consists of two phases: a swiss-round phase followed by a
-              single-elimination bracket phase.
+              The tournament consists of two phases: a round-robin phase followed by a
+              double-elimination bracket phase.
             </ListItem>
             <ListItem>
               Having a <ExternalLink url="https://racetime.gg/${}">Racetime.gg</ExternalLink>{" "}
@@ -88,13 +88,36 @@ export const AboutPage: React.FC = () => {
             </ListItem>
           </List>
 
-          <h3>Phase 1: Swiss Rounds</h3>
+          <h3>Phase 1: Round-robin</h3>
           <List>
             <ListItem>
-              The first phase consists of <strong>4</strong> rounds.
+              This phase will last <strong>3</strong> weeks.
             </ListItem>
             <ListItem>
-              Each round starts on <strong>Monday, 4pm UTC</strong> and lasts exactly one week.
+              Each round starts on <strong>Monday, 4pm UTC</strong>.
+            </ListItem>
+            <ListItem>
+              Just before the tournament starts, all entrants will be divided over{" "}
+              <strong>4 pots</strong>. The first pot contains the entrants with the highest seed,
+              the second contains the second highest, and so on.
+            </ListItem>
+            <ListItem>
+              An entrant's seed is equal to their{" "}
+              <ExternalLink url="https://xwmtp.github.io/bingo-leaderboard">
+                Bingo leaderboard
+              </ExternalLink>{" "}
+              score at the time that pots are decided.
+            </ListItem>
+            <ListItem>
+              A draw stream will then decide the groups of phase 1. For each group, a random entrant
+              is drawn from each pot. This results into groups of 4 entrants, and possibly a few
+              groups of 3.
+            </ListItem>
+            <ListItem>
+              During this phase, each entrant will play all the other entrants in their group once.
+              They will play one match per week, and will be told beforehand which opponent of their
+              group they have for the week. It's not allowed to already play matches that are
+              planned for later weeks, without explicit permission of a Tournament Organizer.
             </ListItem>
             <ListItem>
               All races have to be finished before the end of the round. If a race is not done in
@@ -103,68 +126,29 @@ export const AboutPage: React.FC = () => {
             </ListItem>
             <ListItem>
               A win is awarded <strong>3</strong> points. In the unlikely case of a draw (to the
-              second), both players are awarded <strong>1</strong> point.
+              second), both players are awarded <strong>1</strong> point. A loss or forfeit is worth{" "}
+              <strong>0</strong> points.
             </ListItem>
             <ListItem>
               A forfeit is counted as a <strong>4:00:00</strong> time for the tournament median.
             </ListItem>
             <ListItem>
-              Ranking is based on amount of points, then median time in the tournament, then amount
-              of finished (not forfeited) races in the tournament.
-            </ListItem>
-
-            <br />
-            <strong>Seeding and paring</strong>
-            <List>
-              <ListItem>
-                Seeding and pairing will be based on the{" "}
-                <ExternalLink url="https://xwmtp.github.io/bingo-leaderboard">
-                  Bingo leaderboard
-                </ExternalLink>{" "}
-                rating, not the tournament's ranking.
-              </ListItem>
-              <ListItem>
-                Before Round 1 starts, the upper half (rounded up) of the leaderboard gets one{" "}
-                <em>virtual point</em>. The virtual point is removed before Round 3 starts.
-              </ListItem>
-              <ListItem>
-                Within each group of entrants with the same amount of tournament points (including
-                the virtual point), the highest-seeded player will face the lowest-seeded player,
-                the second highest will face the second lowest, and so on.
-              </ListItem>
-              <ListItem>
-                If a group has an odd number of entrants, the highest seed of that group floats down
-                to the group below. Each entrant can be floated down according to that rule at most
-                once.
-              </ListItem>
-              <ListItem>
-                Each entrant will only have to face an entrant that floated down once at most.
-              </ListItem>
-              <ListItem>
-                If there is an odd number of entrants, the highest seed of the lowest group gets a{" "}
-                <strong>bye</strong>. A maximum of one bye can be given to each entrant.
-              </ListItem>
-              <ListItem>
-                A player that received a bye should still do a race against any opponent(s), to set
-                a time for their tournament median. If not, they receive a forfeit time (but still 3
-                points). They should announce before the match that it will count for the
-                tournament.
-              </ListItem>
-            </List>
-            <ListItem>
-              At the end of the 4th round, the top <strong>13</strong> players will advance to the
-              second phase as seeds 1 to 13.
-            </ListItem>
-            <ListItem>
-              Among the remaining players, the top <strong>3</strong> median times will advance to
-              the second phase as seeds 14 to 16.
+              At the end of this phase, the top two players of each group advance to the next phase.
+              Ties are broken by looking at the results of the matches between the tied players. For
+              example, if player A and B are tied, and in their match B won from A, then B advances
+              to the next round. If this method still results in a tie, the tournament median time
+              is considered.
             </ListItem>
           </List>
 
           <h3>Phase 2: Bracket</h3>
           <List>
             <ListItem>
-              The second phase is a <strong>single-elimination</strong> bracket.
+              The second phase is a <strong>double-elimination</strong> bracket.
+            </ListItem>
+            <ListItem>
+              Entrants have one week to play their match. If you don't manage to play in time, you
+              will be out of the bracket.
             </ListItem>
             <ListItem>In the event of a draw, the match has to be played again.</ListItem>{" "}
             <ListItem>
