@@ -15,7 +15,7 @@ CI=false npm run build || exit 1
 echo "$2" | docker login docker.pkg.github.com -u "$1" --password-stdin
 
 IMAGE_NAME=bingo-tournament-fe
-IMAGE_ID=docker.pkg.github.com/xwmtp/bingo2022/$IMAGE_NAME
+IMAGE_ID=docker.pkg.github.com/xwmtp/bingo2023/$IMAGE_NAME
 
 docker build . --tag $IMAGE_NAME
 docker tag $IMAGE_NAME $IMAGE_ID:latest
