@@ -3,8 +3,8 @@ import { BracketSetup } from "./domain/BracketSetup";
 export const tournamentSettings = {
   RACETIME_CATEGORY: "oot",
   FORFEIT_TIME: 4 * 3600,
-  CAN_WITHDRAW: false,
-  CAN_SIGNUP: false,
+  CAN_WITHDRAW: true,
+  CAN_SIGNUP: true,
   WIN_POINTS: 3,
   TIE_POINTS: 1,
   LOSE_POINTS: 0,
