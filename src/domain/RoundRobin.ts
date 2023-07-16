@@ -68,8 +68,10 @@ export const toRobinGroupEntries = (
 
 const addGroupRanks = (entries: LeaderboardEntry[]): RobinGroupEntry[] => {
   let allEntries: LeaderboardEntry[] = [];
-  const groupedByPoints = groupEntries(entries);
-  for (const pointGroup of Object.values(groupedByPoints)) {
+  const sortedEntries = entries.sort((a, b) => b.points - a.points);
+  const groupsByPoints = groupEntries(sortedEntries);
+
+  for (const pointGroup of groupsByPoints) {
     if (pointGroup.length > 1) {
       allEntries = allEntries.concat(breakTie(pointGroup));
     } else {
@@ -108,14 +110,23 @@ export const breakTie = (tiedEntries: LeaderboardEntry[]): LeaderboardEntry[] =>
   return sortedTieResults.map((tieResult) => tieResult.entry);
 };
 
-function groupEntries(entries: LeaderboardEntry[]): Record<number, LeaderboardEntry[]> {
-  return entries.reduce((acc: Record<number, LeaderboardEntry[]>, entry) => {
+function groupEntries(entries: LeaderboardEntry[]): LeaderboardEntry[][] {
+  const allPoints: number[] = [];
+  const grouped = entries.reduce((acc: Record<number, LeaderboardEntry[]>, entry) => {
     const points = entry.points;
     if (acc[points]) {
       acc[points].push(entry);
     } else {
+      allPoints.push(points);
       acc[points] = [entry];
     }
     return acc;
   }, {});
+
+  const sortedGroups: LeaderboardEntry[][] = [];
+  const sortedKeys = allPoints.sort((a, b) => b - a);
+  for (const key of sortedKeys) {
+    sortedGroups.push(grouped[key]);
+  }
+  return sortedGroups;
 }
