@@ -5,7 +5,7 @@ import { tournamentSettings } from "../Settings";
 import { calculateMedian } from "../lib/timeHelpers";
 import { RacetimeLeaderboard, RacetimeLeaderboardEntry } from "./RacetimeLeaderboard";
 
-const RESULT_POINTS: { [key in RankStatus]: number } = {
+export const RESULT_POINTS: { [key in RankStatus]: number } = {
   win: tournamentSettings.WIN_POINTS,
   tie: tournamentSettings.TIE_POINTS,
   loss: tournamentSettings.LOSE_POINTS,
@@ -21,8 +21,13 @@ export interface LeaderboardEntry {
   ties: number;
   losses: number;
   finishTimes: number[];
-  opponents: User[];
+  opponentResults: OpponentResult[];
   racetimeStats?: RacetimeLeaderboardEntry;
+}
+
+export interface OpponentResult {
+  opponent: User;
+  result: RankStatus;
 }
 
 const createEmptyEntry = (user: User): LeaderboardEntry => {
@@ -36,7 +41,7 @@ const createEmptyEntry = (user: User): LeaderboardEntry => {
     ties: 0,
     losses: 0,
     finishTimes: [],
-    opponents: [],
+    opponentResults: [],
     racetimeStats: undefined,
   };
 };
@@ -66,7 +71,10 @@ export const toLeaderboardEntries = (
       );
       for (const opponent of result.entrants) {
         if (opponent.user.id !== entrant.user.id) {
-          entry.opponents.push(opponent.user);
+          entry.opponentResults.push({
+            opponent: opponent.user,
+            result: entrant.result.resultStatus,
+          });
         }
       }
       if (entrant.result.resultStatus === "win") {
@@ -128,8 +136,8 @@ export const toPairingEntries = (entries: LeaderboardEntry[]) => {
     return {
       name: entry.user.name,
       id: entry.user.id,
-      opponents: entry.opponents.map((opponent) => {
-        return { name: opponent.name, id: opponent.id };
+      opponents: entry.opponentResults.map((opponentResult) => {
+        return { name: opponentResult.opponent.name, id: opponentResult.opponent.id };
       }),
       points: entry.points,
       current_seed: entry.racetimeStats?.leaderboardScore ?? null,
