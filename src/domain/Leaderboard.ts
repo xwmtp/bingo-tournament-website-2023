@@ -30,7 +30,7 @@ export interface OpponentResult {
   result: RankStatus;
 }
 
-const createEmptyEntry = (user: User): LeaderboardEntry => {
+export const createEmptyEntry = (user: User): LeaderboardEntry => {
   return {
     user: user,
     roundsPlayed: 0,

@@ -1,7 +1,7 @@
 import { User } from "./User";
 import { RacetimeLeaderboard, RacetimeLeaderboardEntry } from "./RacetimeLeaderboard";
 import { chunkArrayByNumber } from "../lib/arrayHelpers";
-import { LeaderboardEntry, toLeaderboardEntries } from "./Leaderboard";
+import { LeaderboardEntry, RESULT_POINTS, toLeaderboardEntries } from "./Leaderboard";
 import { MatchResult } from "./Match";
 
 export interface RobinPotSetup {
@@ -31,7 +31,11 @@ export type RobinGroups = RobinGroup[];
 
 interface RobinGroup {
   groupName: string;
-  entries: LeaderboardEntry[];
+  entries: RobinGroupEntry[];
+}
+
+export interface RobinGroupEntry extends LeaderboardEntry {
+  groupRank: number;
 }
 
 export const toRobinGroupEntries = (
@@ -40,20 +44,78 @@ export const toRobinGroupEntries = (
   allResults: MatchResult[],
   racetimeLeaderboard: RacetimeLeaderboard | undefined
 ): RobinGroups => {
-  const entries = toLeaderboardEntries(allEntrantsUsers, allResults, racetimeLeaderboard);
-  console.log(entries);
+  const leaderboardEntries = toLeaderboardEntries(
+    allEntrantsUsers,
+    allResults,
+    racetimeLeaderboard
+  );
   return groupsSetup.map((setup) => {
+    const groupEntries = setup.entrants.map((entrant) => {
+      const matchingEntry = leaderboardEntries.find((entry) => entry.user.id === entrant.playerId);
+      if (!matchingEntry) {
+        throw Error(
+          `Could not create robin groups, could not find matching entry for id ${entrant.playerId}`
+        );
+      }
+      return matchingEntry;
+    });
     return {
       groupName: setup.groupName,
-      entries: setup.entrants.map((entrant) => {
-        const matchingEntry = entries.find((entry) => entry.user.id === entrant.playerId);
-        if (!matchingEntry) {
-          throw Error(
-            `Could not create robin groups, could not find matching entry for id ${entrant.playerId}`
-          );
-        }
-        return matchingEntry;
-      }),
+      entries: addGroupRanks(groupEntries),
     };
   });
 };
+
+const addGroupRanks = (entries: LeaderboardEntry[]): RobinGroupEntry[] => {
+  let allEntries: LeaderboardEntry[] = [];
+  const groupedByPoints = groupEntries(entries);
+  for (const pointGroup of Object.values(groupedByPoints)) {
+    if (pointGroup.length > 1) {
+      allEntries = allEntries.concat(breakTie(pointGroup));
+    } else {
+      allEntries = allEntries.concat(pointGroup);
+    }
+  }
+  return allEntries.map((entry, index) => ({ ...entry, groupRank: index + 1 }));
+};
+
+export const breakTie = (tiedEntries: LeaderboardEntry[]): LeaderboardEntry[] => {
+  const tieResult: { entry: LeaderboardEntry; tiePoints: number }[] = [];
+
+  for (const entry of tiedEntries) {
+    let tiePoints = 0;
+    const otherEntries = tiedEntries.filter((e) => entry.user.id !== e.user.id);
+    for (const otherEntry of otherEntries) {
+      const headToHeadResult = entry.opponentResults.find(
+        (res) => res.opponent.id === otherEntry.user.id
+      );
+      if (headToHeadResult) {
+        tiePoints += RESULT_POINTS[headToHeadResult.result];
+      }
+    }
+    tieResult.push({ entry: entry, tiePoints: tiePoints });
+  }
+
+  const sortedTieResults = tieResult.sort((a, b) => {
+    if (a.tiePoints === b.tiePoints) {
+      if (a.entry.median === b.entry.median) {
+        return Math.random() > 0.5 ? 1 : -1;
+      }
+      return (a.entry?.median ?? 0) - (b.entry.median ?? 0);
+    }
+    return b.tiePoints - a.tiePoints;
+  });
+  return sortedTieResults.map((tieResult) => tieResult.entry);
+};
+
+function groupEntries(entries: LeaderboardEntry[]): Record<number, LeaderboardEntry[]> {
+  return entries.reduce((acc: Record<number, LeaderboardEntry[]>, entry) => {
+    const points = entry.points;
+    if (acc[points]) {
+      acc[points].push(entry);
+    } else {
+      acc[points] = [entry];
+    }
+    return acc;
+  }, {});
+}

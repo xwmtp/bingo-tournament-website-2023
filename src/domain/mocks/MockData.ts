@@ -7,7 +7,7 @@ import { Match as MatchDto } from "@xwmtp/bingo-tournament/dist/models/Match";
 import { Pair } from "../Pair";
 import { BracketSetup } from "../BracketSetup";
 
-const xwillmarktheplace = {
+export const xwillmarktheplace: User = {
   id: "d17DexWEKg3ak64R",
   roles: [Role.Entrant, Role.Admin],
   name: "xwillmarktheplace",
@@ -15,7 +15,7 @@ const xwillmarktheplace = {
   twitchChannel: "https://www.twitch.tv/xwillmarktheplace",
 };
 
-const fleush = {
+export const fleush: User = {
   id: "pRbOXG3ykOWZVKq1",
   roles: [Role.Entrant],
   name: "Fleush",
@@ -23,7 +23,7 @@ const fleush = {
   twitchChannel: "https://www.twitch.tv/happyfleush",
 };
 
-const jenslang = {
+export const jenslang: User = {
   id: "rZyM4orRvRoqDJX0",
   roles: [Role.Entrant],
   name: "jenslang",
@@ -31,7 +31,7 @@ const jenslang = {
   twitchChannel: "https://www.twitch.tv/jenslang",
 };
 
-const juwk = {
+export const juwk: User = {
   id: "XGzr7pBMny3kqgyE",
   roles: [Role.Entrant],
   name: "juwk",
@@ -39,7 +39,7 @@ const juwk = {
   twitchChannel: "https://www.twitch.tv/jenslang",
 };
 
-const scaramanga = {
+export const scaramanga: User = {
   id: "wdm1LPWjGABEnVx6",
   roles: [Role.Entrant],
   name: "scaramanga",
@@ -47,7 +47,7 @@ const scaramanga = {
   twitchChannel: "https://www.twitch.tv/scaramangado",
 };
 
-const matttInTheHat = {
+export const matttInTheHat: User = {
   id: "VXY0eABdn7oLKPnz",
   roles: [Role.Entrant],
   name: "MatttInTheHat",
@@ -55,7 +55,7 @@ const matttInTheHat = {
   twitchChannel: "https://www.twitch.tv/matttinthehat",
 };
 
-const exodus = {
+export const exodus: User = {
   id: "ZbpNAaBvn5BJkg04",
   roles: [Role.Entrant],
   name: "Exodus",
@@ -63,7 +63,7 @@ const exodus = {
   twitchChannel: "https://www.twitch.tv/exodus",
 };
 
-const adef = {
+export const adef: User = {
   id: "ZVa0eMonnbol9pyJ",
   roles: [Role.Entrant],
   name: "Adef",
