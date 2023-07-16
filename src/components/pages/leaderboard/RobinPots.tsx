@@ -11,12 +11,14 @@ import { User } from "../../../domain/User";
 import { RobinPotPlayerEntry, splitToRobinPots } from "../../../domain/RoundRobin";
 import { robinPotsSetup } from "../../../Settings";
 import { WideScreenOnly } from "../../divs/WideScreenOnly";
+import { useUser } from "../../../api/userApi";
 
 interface Props {
   allEntrants: User[];
 }
 
 export const RobinPots: React.FC<Props> = ({ allEntrants }) => {
+  const { data: user } = useUser();
   const { data: racetimeLeaderboard } = useRacetimeLeaderboard();
 
   const title = "Phase 1";
@@ -65,7 +67,7 @@ export const RobinPots: React.FC<Props> = ({ allEntrants }) => {
               return (
                 <RobinPotEntry
                   key={index}
-                  $displayAsLoggedInUser={false} //todo
+                  $displayAsLoggedInUser={!!user && entry.user.id === user.id}
                 >
                   <RankAndUser>
                     <Rank>{entry.rank}</Rank>

@@ -11,6 +11,7 @@ import { MatchResult } from "../../../domain/Match";
 import { toRobinGroupEntries } from "../../../domain/RoundRobin";
 import { useRacetimeLeaderboard } from "../../../api/racetimeLeaderboardApi";
 import { robinGroupsSetup } from "../../../Settings";
+import { useUser } from "../../../api/userApi";
 
 interface Props {
   allEntrants: User[];
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export const RobinGroups: React.FC<Props> = ({ allEntrants, allResults }) => {
+  const { data: user } = useUser();
   const { data: racetimeLeaderboard } = useRacetimeLeaderboard();
 
   const title = "Phase 1";
@@ -60,7 +62,7 @@ export const RobinGroups: React.FC<Props> = ({ allEntrants, allResults }) => {
                 return (
                   <GroupEntry
                     key={index}
-                    $displayAsLoggedInUser={false} //todo
+                    $displayAsLoggedInUser={!!user && entry.user.id === user.id}
                   >
                     <RankAndUser>
                       <Rank>{index + 1}</Rank>
