@@ -50,15 +50,19 @@ export const toRobinGroupEntries = (
     racetimeLeaderboard
   );
   return groupsSetup.map((setup) => {
-    const groupEntries = setup.entrants.map((entrant) => {
-      const matchingEntry = leaderboardEntries.find((entry) => entry.user.id === entrant.playerId);
-      if (!matchingEntry) {
-        throw Error(
-          `Could not create robin groups, could not find matching entry for id ${entrant.playerId}`
+    const groupEntries = setup.entrants
+      .map((entrant) => {
+        const matchingEntry = leaderboardEntries.find(
+          (entry) => entry.user.id === entrant.playerId
         );
-      }
-      return matchingEntry;
-    });
+        if (!matchingEntry) {
+          console.error(
+            `Could not create robin groups, could not find matching entry for id ${entrant.playerId}`
+          );
+        }
+        return matchingEntry;
+      })
+      .filter((entry): entry is LeaderboardEntry => !!entry);
     return {
       groupName: setup.groupName,
       entries: addGroupRanks(groupEntries),

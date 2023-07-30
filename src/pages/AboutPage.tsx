@@ -19,17 +19,17 @@ export const AboutPage: React.FC = () => {
           <h3>General info</h3>
           <List>
             <ListItem>
-              The tournament will start on <strong>Monday, August 13th.</strong>
+              Sign up will close on <strong>Friday, August 11th, at 11:59pm UTC.</strong>
             </ListItem>
             <ListItem>
-              Sign up will close on <strong>Friday, August 11th, at 11:59pm UTC.</strong>
+              The tournament will start on <strong>Monday, August 13th.</strong>
             </ListItem>
             <ListItem>
               This is a regular{" "}
               <ExternalLink url="https://ootbingo.github.io/bingo/latest-version.html">
                 Bingo
               </ExternalLink>{" "}
-              tournament, played on the latest version (currently <strong>v10.2</strong>). Note that
+              tournament, played on the latest version (currently <strong>v10.3</strong>). Note that
               the version <em>may</em> be updated between rounds, but never while a round is in
               progress.
             </ListItem>
@@ -63,7 +63,8 @@ export const AboutPage: React.FC = () => {
               It is not allowed to help entrants with their bingo during tournament races.
             </ListItem>
             <ListItem>
-              Entrants may not watch the restream of their match while they are racing.
+              Entrants may not watch the restream of their match while they are racing. Watching
+              your opponent's stream is allowed.
             </ListItem>
             <ListItem>All races must be livestreamed.</ListItem>
           </List>
@@ -134,10 +135,10 @@ export const AboutPage: React.FC = () => {
             </ListItem>
             <ListItem>
               At the end of this phase, the top two players of each group advance to the next phase.
-              Ties are broken by looking at the results of the matches between the tied players. For
-              example, if player A and B are tied, and in their match B won from A, then B advances
-              to the next round. If this method still results in a tie, the tournament median time
-              is considered.
+              Ties are broken by looking at the results of the head-to-head matches between the tied
+              players. For example, if player A and B are tied, and B won from A in the head-to-head
+              match, then B advances to the next round. If this method still results in a tie, the
+              tournament median time is considered.
             </ListItem>
           </List>
 
