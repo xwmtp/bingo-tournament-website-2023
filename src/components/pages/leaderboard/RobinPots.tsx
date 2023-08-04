@@ -12,6 +12,7 @@ import { RobinPotPlayerEntry, splitToRobinPots } from "../../../domain/RoundRobi
 import { robinPotsSetup } from "../../../Settings";
 import { WideScreenOnly } from "../../divs/WideScreenOnly";
 import { useUser } from "../../../api/userApi";
+import { Spinner } from "../../general/Spinner";
 
 interface Props {
   allEntrants: User[];
@@ -19,7 +20,7 @@ interface Props {
 
 export const RobinPots: React.FC<Props> = ({ allEntrants }) => {
   const { data: user } = useUser();
-  const { data: racetimeLeaderboard } = useRacetimeLeaderboard();
+  const { data: racetimeLeaderboard, isLoading: isLoadingRacetime } = useRacetimeLeaderboard();
 
   const title = "Phase 1";
 
@@ -46,6 +47,14 @@ export const RobinPots: React.FC<Props> = ({ allEntrants }) => {
   }, [allEntrants, racetimeLeaderboard]);
 
   const robinPots = splitToRobinPots(robinPotsSetup, sortedPotEntries);
+
+  if (isLoadingRacetime) {
+    return (
+      <Container title={title}>
+        <Spinner />
+      </Container>
+    );
+  }
 
   if (sortedPotEntries.length === 0) {
     return (

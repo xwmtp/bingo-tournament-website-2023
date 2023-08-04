@@ -43,6 +43,11 @@ export const AboutPage: React.FC = () => {
               the tournament. You may sign up before you completed one race, but should finish one
               before the tournament starts (join ESNB/SNB for example!).
             </ListItem>
+            <ListItem>
+              You can sign up by logging in on this website with your{" "}
+              <ExternalLink url="https://racetime.gg/${}">Racetime.gg</ExternalLink> account. Click
+              on your profile picture to find the sign up button.
+            </ListItem>
           </List>
 
           <h3>Rules</h3>
@@ -55,9 +60,9 @@ export const AboutPage: React.FC = () => {
               and announced in the Discord when about to start.
             </ListItem>
             <ListItem>
-              <strong>ESNB</strong> and <strong>SNB</strong> may not be used for any match in the
-              tournament. All races have to be played in a different room from <strong>ESNB</strong>{" "}
-              or <strong>SNB</strong>.
+              All races should take place in a separate, 2 entrant race room on Racetime. If at all
+              possible scheduling wise, it is encouraged to try not to overlap your race with the
+              Bingo weeklies.
             </ListItem>
             <ListItem>
               It is not allowed to help entrants with their bingo during tournament races.
@@ -151,11 +156,7 @@ export const AboutPage: React.FC = () => {
               Entrants have one week to play their match. If you don't manage to play in time, you
               will be out of the bracket.
             </ListItem>
-            <ListItem>In the event of a draw, the match has to be played again.</ListItem>{" "}
-            <ListItem>
-              Each match consists of one race, except for the grand finals, which is played in three
-              races.
-            </ListItem>
+            <ListItem>In the event of a draw, the match has to be played again.</ListItem>
           </List>
         </AboutContent>
       </Container>
