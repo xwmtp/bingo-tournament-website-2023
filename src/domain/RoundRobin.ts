@@ -53,13 +53,14 @@ export const toRobinGroupEntries = (
   return groupsSetup.map((setup) => {
     const groupEntries = setup.entrants
       .map((entrant) => {
-        const matchingEntry = leaderboardEntries.find(
-          (entry) => entry.user.id === entrant.playerId
+        const matchingEntry = leaderboardEntries.find((entry) =>
+          entry.user.name.toLowerCase().startsWith(entrant.playerId.toLowerCase())
         );
-        if (!matchingEntry) {
+        if (!matchingEntry || entrant.playerId === "") {
           console.error(
             `Could not create robin groups, could not find matching entry for id ${entrant.playerId}`
           );
+          return undefined;
         }
         return matchingEntry;
       })
@@ -106,7 +107,10 @@ export const breakTie = (tiedEntries: LeaderboardEntry[]): LeaderboardEntry[] =>
   const sortedTieResults = tieResult.sort((a, b) => {
     if (a.tiePoints === b.tiePoints) {
       if (a.entry.median === b.entry.median) {
-        return Math.random() > 0.5 ? 1 : -1;
+        return (
+          (b.entry.racetimeStats?.leaderboardScore ?? 0) -
+          (a.entry.racetimeStats?.leaderboardScore ?? 0)
+        );
       }
       return (a.entry?.median ?? 0) - (b.entry.median ?? 0);
     }

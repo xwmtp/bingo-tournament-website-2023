@@ -12,7 +12,6 @@ import { DateTime } from "luxon";
 import { useQuery } from "react-query";
 import { NewMatch as NewMatchDto } from "@xwmtp/bingo-tournament";
 import { websiteSettings } from "../Settings";
-import { mockAllMatches } from "../domain/mocks/MockData";
 
 const getAllMatches = async (): Promise<Match[]> => {
   try {
@@ -20,7 +19,7 @@ const getAllMatches = async (): Promise<Match[]> => {
     return matchDtos.map(mapToMatch);
   } catch (error) {
     if (websiteSettings.USE_MOCK_DATA) {
-      return mockAllMatches;
+      return []; //mockAllMatches;
     }
     throw error;
   }

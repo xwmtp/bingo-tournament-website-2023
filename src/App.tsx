@@ -11,7 +11,6 @@ import { AdminPage } from "./pages/profile/AdminPage";
 import { ModalProvider } from "styled-react-modal";
 import { ResultsPage } from "./pages/ResultsPage";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 import { LeaderboardPage } from "./pages/LeaderboardPage";
 import { PairingPage } from "./pages/extra/PairingPage";
 import { Page } from "./components/Page";
@@ -54,7 +53,7 @@ function App() {
           </Content>
         </ModalProvider>
       </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/*<ReactQueryDevtools initialIsOpen={false} />*/}
     </QueryClientProvider>
   );
 }

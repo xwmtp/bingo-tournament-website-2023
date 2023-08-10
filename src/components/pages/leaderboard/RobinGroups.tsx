@@ -44,24 +44,28 @@ export const RobinGroups: React.FC<Props> = ({ allEntrants, allResults }) => {
   return (
     <Container title={title} contentGap={2}>
       <Groups>
-        {groups.map((group, index) => {
+        {groups.map((group) => {
+          if (group.entries.length === 0) {
+            return null;
+          }
+
           return (
-            <div key={index}>
+            <div key={group.groupName}>
               <EntryHeader>
                 <GroupTitle>
                   <h3>{group.groupName}</h3>
                 </GroupTitle>
-                <Number>Rounds</Number>
+                {/*<Number>Rounds</Number>*/}
 
-                <Number>
-                  <strong>Points</strong>
-                </Number>
+                {/*<Number>*/}
+                {/*  <strong>Points</strong>*/}
+                {/*</Number>*/}
               </EntryHeader>
 
               {group.entries.map((entry, index) => {
                 return (
                   <GroupEntry
-                    key={index}
+                    key={`${entry.user.id}-${index}`}
                     $displayAsLoggedInUser={!!user && entry.user.id === user.id}
                   >
                     <RankAndUser>
@@ -69,11 +73,11 @@ export const RobinGroups: React.FC<Props> = ({ allEntrants, allResults }) => {
                       <UserDisplay size="big" user={entry.user} />
                     </RankAndUser>
 
-                    <Number>{entry.roundsPlayed}</Number>
+                    {/*<Number>{entry.roundsPlayed}</Number>*/}
 
-                    <Number>
-                      <strong>{entry.points}</strong>
-                    </Number>
+                    {/*<Number>*/}
+                    {/*  <strong>{entry.points}</strong>*/}
+                    {/*</Number>*/}
                   </GroupEntry>
                 );
               })}

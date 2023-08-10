@@ -75,7 +75,7 @@ export const RobinPots: React.FC<Props> = ({ allEntrants }) => {
             {robinPot.map((entry) => {
               return (
                 <RobinPotEntry
-                  key={index}
+                  key={entry.user.id}
                   $displayAsLoggedInUser={!!user && entry.user.id === user.id}
                 >
                   <RankAndUser>

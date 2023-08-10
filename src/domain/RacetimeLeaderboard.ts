@@ -3,7 +3,7 @@ import { DateTime } from "luxon";
 // Bingo Leaderboard (using racetime data)
 
 export interface RacetimeLeaderboardDto {
-  lastUpdated: DateTime;
+  lastUpdated: string;
   numEntries: number;
   entries: RacetimeLeaderboardEntryDto[];
 }

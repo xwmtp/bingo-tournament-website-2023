@@ -6,7 +6,7 @@ import { useAllEntrants } from "../api/entrantsApi";
 import { useMatchResults } from "../api/matchesApi";
 import { NothingToDisplay } from "../components/general/NothingToDisplay";
 import { leaderboardSettings } from "../Settings";
-import { RobinGroups } from "../components/pages/leaderboard/RobinGroups";
+import { RobinPots } from "../components/pages/leaderboard/RobinPots";
 
 export const LeaderboardPage: React.FC = () => {
   const { data: allEntrants, isLoading: isLoadingEntrants } = useAllEntrants();
@@ -41,7 +41,7 @@ export const LeaderboardPage: React.FC = () => {
   return (
     <>
       <RobinGroups allEntrants={allEntrants} allResults={matchResults} />
-      {/*<RobinPots allEntrants={allEntrants} />*/}
+      <RobinPots allEntrants={allEntrants} />
 
       {/*{bracketRounds.length > 0 && <Bracket bracketRounds={bracketRounds} />}*/}
       {/*<Leaderboard allEntrants={allEntrants} allResults={relevantMatchResults} />*/}
