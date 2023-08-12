@@ -6,7 +6,7 @@ export interface User {
   id: string;
   name: string;
   roles: Role[];
-  avatar: string;
+  avatar?: string;
   twitchChannel?: string;
 }
 

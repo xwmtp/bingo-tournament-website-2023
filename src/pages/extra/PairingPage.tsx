@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../api/userApi";
-import { isAdmin } from "../../domain/User";
 import { NothingToDisplay } from "../../components/general/NothingToDisplay";
 import { useAllEntrants } from "../../api/entrantsApi";
 import { Container } from "../../components/Container";
@@ -13,6 +12,7 @@ import { mapToPairs, Pair } from "../../domain/Pair";
 import { PairBlock } from "../../components/pages/pairing/PairBlock";
 import { TextAreaInput } from "../../components/forms/TextAreaInput";
 import { ErrorText } from "../../components/general/ErrorText";
+import { getGroupRawPairs } from "../../Settings";
 
 export const PairingPage: React.FC = () => {
   const { data: user } = useUser();
@@ -26,7 +26,7 @@ export const PairingPage: React.FC = () => {
   useEffect(() => {
     setIsJsonError(false);
     try {
-      const rawPairs = pairJsonInput && JSON.parse(pairJsonInput);
+      const rawPairs = getGroupRawPairs(); //pairJsonInput && JSON.parse(pairJsonInput);
       const pairs = rawPairs && allEntrants ? mapToPairs(rawPairs, allEntrants) : [];
       setPairs(pairs);
     } catch (error) {
@@ -35,13 +35,13 @@ export const PairingPage: React.FC = () => {
     }
   }, [allEntrants, pairJsonInput]);
 
-  if (!user || !isAdmin(user)) {
-    return (
-      <Container>
-        <NothingToDisplay>This page is admin only.</NothingToDisplay>
-      </Container>
-    );
-  }
+  // if (!user || !isAdmin(user)) {
+  //   return (
+  //     <Container>
+  //       <NothingToDisplay>This page is admin only.</NothingToDisplay>
+  //     </Container>
+  //   );
+  // }
 
   if (!allEntrants) {
     return (

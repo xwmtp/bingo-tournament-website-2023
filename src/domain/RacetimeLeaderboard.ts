@@ -42,6 +42,7 @@ export const mapToRacetimeLeaderboard = (
   const leaderboard: RacetimeLeaderboard = {};
 
   for (const entry of racetimeLeaderboardDto.entries) {
+    console.log("TEST qqq", JSON.stringify(entry));
     leaderboard[entry.playerId] = {
       id: entry.playerId,
       rank: entry.rank,

@@ -24,6 +24,8 @@ export const RobinPots: React.FC<Props> = ({ allEntrants }) => {
 
   const title = "Phase 1";
 
+  console.log(JSON.stringify(racetimeLeaderboard, null, 1));
+
   const sortedPotEntries: RobinPotPlayerEntry[] = useMemo(() => {
     if (allEntrants && racetimeLeaderboard) {
       const entries = allEntrants.map((user, index) => {
@@ -73,13 +75,14 @@ export const RobinPots: React.FC<Props> = ({ allEntrants }) => {
           <div key={index}>
             <PotTitle>{`Pot ${index + 1}`}</PotTitle>
             {robinPot.map((entry) => {
+              console.log(entry);
               return (
                 <RobinPotEntry
                   key={entry.user.id}
                   $displayAsLoggedInUser={!!user && entry.user.id === user.id}
                 >
                   <RankAndUser>
-                    <Rank>{entry.rank}</Rank>
+                    {/*<Rank>{entry.rank}</Rank>*/}
                     <UserDisplay size="big" user={entry.user} />
                   </RankAndUser>
 

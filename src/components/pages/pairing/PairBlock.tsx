@@ -16,6 +16,8 @@ export const PairBlock: React.FC<Props> = ({ pair, isVisible, direction = "row" 
   const PairUserStyled = direction === "row" ? PairUserRow : PairUserRowVertical;
   return (
     <BlockStyled>
+      {pair[0] && <PairGroup>{pair[0].groupName}</PairGroup>}
+
       {pair.map((entry) => (
         <PairUserStyled key={entry.user.id} $isVisible={isVisible}>
           <PairUserDisplay user={entry.user} />
@@ -51,4 +53,8 @@ const PairUserDisplay = styled(UserDisplay)`
 
 const PairPoints = styled.p`
   margin-right: 1rem;
+`;
+
+const PairGroup = styled.p`
+  margin-left: 1rem;
 `;

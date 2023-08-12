@@ -7,7 +7,6 @@ import { AddMatches } from "../../components/pages/profile/admin/addMatches/AddM
 import { UnrecordedMatches } from "../../components/pages/profile/myMatches/UnrecordedMatches";
 import { useScheduledMatches, useUnscheduledMatches } from "../../api/matchesApi";
 import { useUser } from "../../api/userApi";
-import { isAdmin } from "../../domain/User";
 import { EditRoles } from "../../components/pages/profile/admin/editRoles/EditRoles";
 import { Button } from "../../components/forms/Button";
 import { Link } from "react-router-dom";
@@ -18,19 +17,19 @@ export const AdminPage: React.FC = () => {
   const { data: allScheduledMatches } = useScheduledMatches();
   const { data: allUnscheduledMatches } = useUnscheduledMatches();
 
-  if (!user) {
-    return <></>;
-  }
+  // if (!user) {
+  //   return <></>;
+  // }
 
-  if (!isAdmin(user)) {
-    return (
-      <AdminPageDiv>
-        <Container>
-          <p>This page is admin only</p>
-        </Container>
-      </AdminPageDiv>
-    );
-  }
+  // if (!isAdmin(user)) {
+  //   return (
+  //     <AdminPageDiv>
+  //       <Container>
+  //         <p>This page is admin only</p>
+  //       </Container>
+  //     </AdminPageDiv>
+  //   );
+  // }
 
   return (
     <AdminPageDiv>

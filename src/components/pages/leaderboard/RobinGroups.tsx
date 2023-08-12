@@ -69,7 +69,7 @@ export const RobinGroups: React.FC<Props> = ({ allEntrants, allResults }) => {
                     $displayAsLoggedInUser={!!user && entry.user.id === user.id}
                   >
                     <RankAndUser>
-                      <Rank>{index + 1}</Rank>
+                      {/*<Rank>{index + 1}</Rank>*/}
                       <UserDisplay size="big" user={entry.user} />
                     </RankAndUser>
 

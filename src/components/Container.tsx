@@ -45,7 +45,7 @@ const ContainerHeader = styled.div<{ $backgroundColor?: ColorName }>`
     $backgroundColor ? Colors[$backgroundColor] : Colors.mediumGrey};
   padding: 0.6rem 1.2rem;
   margin-bottom: 0.3rem;
-  border-radius: 0.6rem 0.6rem 0 0;
+  //border-radius: 0.6rem 0.6rem 0 0;
   box-shadow: 0.3rem 0.3rem 0.3rem ${Colors.boxShadowGrey};
 `;
 
@@ -57,7 +57,7 @@ const Content = styled.div<{
   background-color: ${({ $backgroundColor }) =>
     $backgroundColor ? Colors[$backgroundColor] : Colors.mediumGrey};
   padding: 1.2rem;
-  border-radius: ${({ $hasHeader }) => ($hasHeader ? "0 0" : "0.6rem 0.6rem")} 0.6rem 0.6rem;
+  //border-radius: ${({ $hasHeader }) => ($hasHeader ? "0 0" : "0.6rem 0.6rem")} 0.6rem 0.6rem;
   box-shadow: 0.3rem 0.3rem 0.3rem ${Colors.boxShadowGrey};
   display: flex;
   flex-direction: column;
