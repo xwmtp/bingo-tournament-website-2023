@@ -48,29 +48,120 @@ export const robinPotsSetup: RobinPotSetup = {
 export const robinGroupsSetup: RobinGroupsSetup = [
   {
     groupName: "Group Armos",
+    groupId: "A",
     entrants: [
-      { playerId: "XGzr7pBMny3kqgyE" },
-      { playerId: "d17DexWEKg3ak64R" },
-      { playerId: "wdm1LPWjGABEnVx6" },
-      { playerId: "VXY0eABdn7oLKPnz" },
-    ],
-  },
-  {
-    groupName: "Group Bombs",
-    entrants: [
+      { playerId: "R8QGZrB2q0WNgk4V" },
+      { playerId: "wezlNoA4443mq6db" },
+      { playerId: "R8QGZrB2k03Ngk4V" },
       { playerId: "ZbpNAaBvn5BJkg04" },
-      { playerId: "ZVa0eMonnbol9pyJ" },
-      { playerId: "rZyM4orRvRoqDJX0" },
-      { playerId: "pRbOXG3ykOWZVKq1" },
     ],
   },
   {
-    groupName: "Group Chus",
+    groupName: "Group Boomerang",
+    groupId: "B",
     entrants: [
-      { playerId: "XGzr7pBMny3kqgyE" },
-      { playerId: "d17DexWEKg3ak64R" },
-      { playerId: "wdm1LPWjGABEnVx6" },
+      { playerId: "dm1LPWj2DOWEnVx6" },
+      { playerId: "NX5783JddGWqlL0a" },
+      { playerId: "DMLq1oZ98e3OeQG8" },
+      { playerId: "5rNGD3DKVaB9blOy" },
+    ],
+  },
+  {
+    groupName: "Group Cojiro",
+    groupId: "C",
+    entrants: [
+      { playerId: "VXY0eABd6boLKPnz" },
+      { playerId: "yMewn83V89W405Jv" },
+      { playerId: "Ek8wpok9GkB5KQyV" },
+      { playerId: "Va0eMongz6Wl9pyJ" },
+    ],
+  },
+  {
+    groupName: "Group Darunia",
+    groupId: "D",
+    entrants: [
+      { playerId: "MqzQPW4Nam31L2R5" },
+      { playerId: "JXzVwZWqElW5k8eb" },
+      { playerId: "7lYZa5B5eZB2Vwv9" },
+      { playerId: "Aa5veoGybABMVr6Z" },
+    ],
+  },
+  {
+    groupName: "Group Epona",
+    groupId: "E",
+    entrants: [
+      { playerId: "OR6ym83mvqoPd1Xr" },
+      { playerId: "xldAMBl4A4BaOP57" },
+      { playerId: "LxldAMBlnboaOP57" },
+      { playerId: "jQbq4dBp7yWvlrG0" },
+    ],
+  },
+  {
+    groupName: "Group Fish",
+    groupId: "F",
+    entrants: [
+      { playerId: "Ek8wpok9mGB5KQyV" },
+      { playerId: "Qbq4dBpJnrovlrG0" },
+      { playerId: "dm1LPWjZLLWEnVx6" },
+      { playerId: "rZyM4orRvRoqDJX0" },
+    ],
+  },
+  {
+    groupName: "Group Gauntlets",
+    groupId: "G",
+    entrants: [
+      { playerId: "dm1LPWjAkjoEnVx6" },
+      { playerId: "XGzr7pBMyqBkqgyE" },
+      { playerId: "vrZyM4orqE3qDJX0" },
+      { playerId: "OR6ym83myb3Pd1Xr" },
+    ],
+  },
+  {
+    groupName: "Group Hookshot",
+    groupId: "H",
+    entrants: [
+      { playerId: "VXY0eABddNBLKPnz" },
+      { playerId: "wdm1LPWjAoEnVx6k" },
+      { playerId: "LNY0OkW1OP3KalP1" },
+      { playerId: "yMewn83V613405Jv" },
+    ],
+  },
+  {
+    groupName: "Group Ingo",
+    groupId: "I",
+    entrants: [
+      { playerId: "aGklxjWzQvoLPdye" },
+      { playerId: "d17DexWEkR3ak64R" },
+      { playerId: "kzM65aWXgxo1y8q0" },
+      { playerId: "OR6ym83mnjoPd1Xr" },
+    ],
+  },
+  {
+    groupName: "Group Jabu",
+    groupId: "J",
+    entrants: [
+      { playerId: "Gzr7pBM7dyokqgyE" },
+      { playerId: "Ek8wpok9KVB5KQyV" },
+      { playerId: "52QE8oNlGXBlywqX" },
+      { playerId: "jQbq4dBpey3vlrG0" },
+    ],
+  },
+  {
+    groupName: "Group Keaton",
+    groupId: "K",
+    entrants: [
+      { playerId: "NqO2YoLDL8o9QEya" },
       { playerId: "VXY0eABdn7oLKPnz" },
+      { playerId: "wNZ1KRBOV8W4qAyj" },
+    ],
+  },
+  {
+    groupName: "Group Lizalfos",
+    groupId: "L",
+    entrants: [
+      { playerId: "ZVa0eMonnbol9pyJ" },
+      { playerId: "vrZyM4orbEoqDJX0" },
+      { playerId: "kzM65aWX6b31y8q0" },
     ],
   },
 ];

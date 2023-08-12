@@ -22,6 +22,7 @@ export type RobinGroupsSetup = RobinGroupSetup[];
 
 interface RobinGroupSetup {
   groupName: string;
+  groupId: string;
   entrants: {
     playerId: string;
   }[];
