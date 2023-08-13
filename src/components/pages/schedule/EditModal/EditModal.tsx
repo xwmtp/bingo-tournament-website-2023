@@ -17,7 +17,7 @@ import { ScheduledMatch } from "../../../../domain/Match";
 import { MutationButton } from "../../../forms/buttons/MutationButton";
 import { useUser } from "../../../../api/userApi";
 import { isAdmin } from "../../../../domain/User";
-import { ErrorText } from "../../../general/ErrorText";
+import { UserErrorText } from "../../../general/ErrorText";
 import { MatchDisplay } from "../../../MatchDisplay";
 import { EditRestream } from "./EditRestream";
 import { DeleteMatch } from "./DeleteMatch";
@@ -83,9 +83,7 @@ export const EditModal: React.FC<Props> = ({ match, visible, onClose }) => {
         <p>New date & time:</p>
         <h4>{dateTimeInput.toLocaleString(DateTime.DATETIME_FULL)}</h4>
 
-        {updateTimeMutation.isError && (
-          <ErrorText>Could not update the time, please try again later.</ErrorText>
-        )}
+        {updateTimeMutation.isError && <UserErrorText text="Could not update the time" />}
 
         <MutationButtonStyled
           disabled={!validDateTimeInput}

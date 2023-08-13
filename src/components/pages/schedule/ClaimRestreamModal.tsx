@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { updateMatchRestream } from "../../../api/matchesApi";
 import { Match } from "../../../domain/Match";
 import { MutationButton } from "../../forms/buttons/MutationButton";
-import { ErrorText } from "../../general/ErrorText";
+import { UserErrorText } from "../../general/ErrorText";
 import { MatchDisplay } from "../../MatchDisplay";
 import { RestreamChannelInputField } from "../../forms/RestreamChannelInputField";
 
@@ -57,7 +57,7 @@ export const ClaimRestreamModal: React.FC<Props> = ({ match, visible, onClose })
         <RestreamChannelInputField initialInput={""} onChannelChange={setRestreamChannel} />
 
         {updateRestreamMutation.isError && (
-          <ErrorText>Could not set the restream channel, please try again later.</ErrorText>
+          <UserErrorText text="Could not set the restream channel" />
         )}
 
         <MutationButtonStyled

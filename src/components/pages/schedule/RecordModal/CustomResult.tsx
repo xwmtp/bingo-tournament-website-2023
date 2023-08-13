@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ErrorText } from "../../../general/ErrorText";
+import { UserErrorText } from "../../../general/ErrorText";
 import styled from "styled-components";
 import { MutationButton } from "../../../forms/buttons/MutationButton";
 import { Container } from "../../../Container";
@@ -67,7 +67,7 @@ export const CustomResult: React.FC<Props> = ({ match, setCustomResultMutation }
 
       <UpdateRestreamDiv>
         {setCustomResultMutation.isError && (
-          <ErrorText>Could not set the restream channel, please try again later.</ErrorText>
+          <UserErrorText text="Could not set the restream channel" />
         )}
       </UpdateRestreamDiv>
 

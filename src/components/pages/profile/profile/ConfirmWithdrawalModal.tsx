@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { withdraw } from "../../../../api/userApi";
 import styled from "styled-components";
 import { MutationButton } from "../../../forms/buttons/MutationButton";
-import { ErrorText } from "../../../general/ErrorText";
+import { UserErrorText } from "../../../general/ErrorText";
 
 interface Props {
   visible: boolean;
@@ -32,9 +32,7 @@ export const ConfirmWithdrawalModal: React.FC<Props> = ({ visible, onClose }) =>
         sign up deadline. Afterwards you cannot rejoin the tournament. Note that you have to alert a
         tournament organizer to withdraw after the deadline has passed.
       </p>
-      {withdrawMutation.isError && (
-        <ErrorText>Could not withdraw, please try again later.</ErrorText>
-      )}
+      {withdrawMutation.isError && <UserErrorText text="Could not withdraw" />}
 
       <ConfirmButton
         mutationStatus={withdrawMutation.status}

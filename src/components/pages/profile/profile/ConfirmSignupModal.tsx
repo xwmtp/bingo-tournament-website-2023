@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { signUp } from "../../../../api/userApi";
 import styled from "styled-components";
 import { MutationButton } from "../../../forms/buttons/MutationButton";
-import { ErrorText } from "../../../general/ErrorText";
+import { UserErrorText } from "../../../general/ErrorText";
 import { NavLink } from "react-router-dom";
 import { Colors } from "../../../../GlobalStyle";
 import { ExternalLink } from "../../../general/ExternalLink";
@@ -54,7 +54,7 @@ export const ConfirmSignupModal: React.FC<Props> = ({ visible, onClose }) => {
         before the start of the tournament, for the sake of seeding. If you haven't yet, you may
         join now and complete your first race later as long as it's before the tournament start.
       </p>
-      {signUpMutation.isError && <ErrorText>Could not sign up, please try again later.</ErrorText>}
+      {signUpMutation.isError && <UserErrorText text="Could not sign up" />}
       <ConfirmButton
         mutationStatus={signUpMutation.status}
         onIdleText={"Sign up"}

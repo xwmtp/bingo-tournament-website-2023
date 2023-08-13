@@ -1,5 +1,5 @@
 import React from "react";
-import { ErrorText } from "../../../general/ErrorText";
+import { UserErrorText } from "../../../general/ErrorText";
 import styled from "styled-components";
 import { MutationButton } from "../../../forms/buttons/MutationButton";
 import { Container } from "../../../Container";
@@ -20,9 +20,7 @@ export const DeleteMatch: React.FC<Props> = ({ match, deleteMatchMutation }) => 
     >
       <p>Click the button to completely remove this match from the database.</p>
 
-      {deleteMatchMutation.isError && (
-        <ErrorText>Could not delete te match, please try again later.</ErrorText>
-      )}
+      {deleteMatchMutation.isError && <UserErrorText text="Could not delete the match" />}
 
       <MutationButtonStyled
         mutationStatus={deleteMatchMutation.status}

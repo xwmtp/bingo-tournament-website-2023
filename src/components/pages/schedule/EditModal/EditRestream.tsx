@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RestreamChannelInputField } from "../../../forms/RestreamChannelInputField";
 import { extractTwitchChannel } from "../../../../lib/urlHelpers";
-import { ErrorText } from "../../../general/ErrorText";
+import { ErrorText, UserErrorText } from "../../../general/ErrorText";
 import styled from "styled-components";
 import { MutationButton } from "../../../forms/buttons/MutationButton";
 import { Container } from "../../../Container";
@@ -59,9 +59,7 @@ export const EditRestream: React.FC<Props> = ({
           onChannelChange={setRestreamChannel}
         />
 
-        {setRestreamMutation.isError && (
-          <ErrorText>Could not set the restream channel, please try again later.</ErrorText>
-        )}
+        {setRestreamMutation.isError && <UserErrorText text="Could not set the restream channel" />}
         {!isValidInput && <ErrorText>Put the channel name only, not a url.</ErrorText>}
       </UpdateRestreamDiv>
 

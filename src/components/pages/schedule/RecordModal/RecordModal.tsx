@@ -8,7 +8,7 @@ import { ScheduledMatch } from "../../../../domain/Match";
 import { MutationButton } from "../../../forms/buttons/MutationButton";
 import { Input } from "../../../forms/Input";
 import { ExternalLink } from "../../../general/ExternalLink";
-import { ErrorText } from "../../../general/ErrorText";
+import { UserErrorText } from "../../../general/ErrorText";
 import { tournamentSettings } from "../../../../Settings";
 import { MatchDisplay } from "../../../MatchDisplay";
 import { useUser } from "../../../../api/userApi";
@@ -79,10 +79,10 @@ export const RecordModal: React.FC<Props> = ({ match, visible, onClose }) => {
         <p>{racetimeId}</p>
 
         {updateRacetimeIdMutation.isError && (
-          <ErrorText>
-            {`Could not record the race. Please confirm that the Racetime id '${racetimeId}' is
-            correct, that the race has been recorded on Racetime already, and that all entrants of the match are in the race.`}
-          </ErrorText>
+          <UserErrorText
+            text={`Could not record the race. Please confirm that the Racetime id '${racetimeId}' is
+            correct, that the race has been recorded on Racetime already, and that all entrants of the match are in the race. If that is all confirmed`}
+          />
         )}
 
         <ConfirmButton

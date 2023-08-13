@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { updateMatchTime } from "../../../api/matchesApi";
 import { MutationButton } from "../../forms/buttons/MutationButton";
 import { UnscheduledMatch } from "../../../domain/Match";
-import { ErrorText } from "../../general/ErrorText";
+import { UserErrorText } from "../../general/ErrorText";
 import { MatchDisplay } from "../../MatchDisplay";
 
 interface Props {
@@ -58,9 +58,7 @@ export const ScheduleModal: React.FC<Props> = ({ match, visible, onClose }) => {
         <p>Schedule match for:</p>
         <h4>{dateTimeInput.toLocaleString(DateTime.DATETIME_FULL)}</h4>
 
-        {matchMutation.isError && (
-          <ErrorText>Could not schedule the match, please try again later.</ErrorText>
-        )}
+        {matchMutation.isError && <UserErrorText text="Could not schedule the match" />}
 
         <ConfirmButton
           disabled={!validInput}

@@ -6,7 +6,7 @@ import { MatchToAdd } from "../../../../../domain/Match";
 import { addMatches } from "../../../../../api/matchesApi";
 import { useMutation, useQueryClient } from "react-query";
 import { MutationButton } from "../../../../forms/buttons/MutationButton";
-import { ErrorText } from "../../../../general/ErrorText";
+import { UserErrorText } from "../../../../general/ErrorText";
 
 interface Props {
   matchesToAdd: MatchToAdd[];
@@ -46,7 +46,7 @@ export const ConfirmMatchesToAddModal: React.FC<Props> = ({
         }?`}</p>
         <MatchesToAdd matchesToAdd={matchesToAdd} />
 
-        {addMatchesMutation.isError && <ErrorText>Something went wrong</ErrorText>}
+        {addMatchesMutation.isError && <UserErrorText text="Something went wrong" />}
 
         <MutationButtonStyled
           mutationStatus={addMatchesMutation.status}

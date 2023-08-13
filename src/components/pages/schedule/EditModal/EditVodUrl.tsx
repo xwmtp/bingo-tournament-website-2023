@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "../../../forms/Input";
-import { ErrorText } from "../../../general/ErrorText";
+import { UserErrorText } from "../../../general/ErrorText";
 import styled from "styled-components";
 import { Container } from "../../../Container";
 import { FlexDiv } from "../../../divs/FlexDiv";
@@ -46,9 +46,7 @@ export const EditVodUrl: React.FC<Props> = ({ match, setVodMutation, deleteVodMu
           placeholder={"https://twitch.tv/videos/123"}
         />
 
-        {setVodMutation.isError && (
-          <ErrorText>Could not set the vod url, please try again later.</ErrorText>
-        )}
+        {setVodMutation.isError && <UserErrorText text="Could not set the vod url" />}
       </EditVodDiv>
 
       <MutationButtonStyled
