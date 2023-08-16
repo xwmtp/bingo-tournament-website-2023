@@ -59,19 +59,25 @@ export const AboutPage: React.FC = () => {
               </ExternalLink>{" "}
               and announced in the Discord when about to start.
             </ListItem>
+            <ListItem>All races must be livestreamed.</ListItem>
             <ListItem>
               All races should take place in a separate, 2 entrant race room on Racetime. If at all
               possible scheduling wise, it is encouraged to try not to overlap your race with the
               Bingo weeklies.
             </ListItem>
             <ListItem>
-              It is not allowed to help entrants with their bingo during tournament races.
+              It is not allowed to help entrants with their bingo during tournament races. If an
+              entrant is not meeting all the requirements for a bingo goal during their race (for
+              example, forgetting or deleting an item), you are allowed to bring that to their
+              attention up to 1 minute before they approximately would think they finished their
+              bingo. You're only allowed to mention which goal they did not successfully complete,
+              not what they are missing.
             </ListItem>
             <ListItem>
-              Entrants may not watch the restream of their match while they are racing. Watching
-              your opponent's stream is allowed.
+              Entrants may not watch the restream of their match while they are racing. They may
+              also not read the #race-spoilers channel in the tournament discord during their race.
+              Watching your opponent's stream is allowed.
             </ListItem>
-            <ListItem>All races must be livestreamed.</ListItem>
           </List>
 
           <h3>Scheduling & recording</h3>
