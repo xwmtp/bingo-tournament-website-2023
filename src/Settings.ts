@@ -165,8 +165,18 @@ export const getGroupRawPairs = () => {
 
   for (const setup of robinGroupsSetup) {
     if (setup.entrants.length === 4) {
-      // type 3
+      // type 1
       if (["A", "B", "C", "D"].includes(setup.groupId)) {
+        pairs.push([
+          { id: setup.entrants[3].playerId, groupName: setup.groupId.toString() },
+          { id: setup.entrants[2].playerId, groupName: setup.groupId.toString() },
+        ]);
+        pairs.push([
+          { id: setup.entrants[1].playerId, groupName: setup.groupId.toString() },
+          { id: setup.entrants[0].playerId, groupName: setup.groupId.toString() },
+        ]);
+        // type 3
+      } else if (["E", "F", "G", "H"].includes(setup.groupId)) {
         pairs.push([
           { id: setup.entrants[3].playerId, groupName: setup.groupId.toString() },
           { id: setup.entrants[0].playerId, groupName: setup.groupId.toString() },
@@ -176,45 +186,35 @@ export const getGroupRawPairs = () => {
           { id: setup.entrants[1].playerId, groupName: setup.groupId.toString() },
         ]);
         // type 2
-      } else if (["E", "F", "G", "H"].includes(setup.groupId)) {
-        pairs.push([
-          { id: setup.entrants[3].playerId, groupName: setup.groupId.toString() },
-          { id: setup.entrants[1].playerId, groupName: setup.groupId.toString() },
-        ]);
-        pairs.push([
-          { id: setup.entrants[2].playerId, groupName: setup.groupId.toString() },
-          { id: setup.entrants[0].playerId, groupName: setup.groupId.toString() },
-        ]);
-        // type 1
       } else {
         pairs.push([
           { id: setup.entrants[3].playerId, groupName: setup.groupId.toString() },
-          { id: setup.entrants[2].playerId, groupName: setup.groupId.toString() },
+          { id: setup.entrants[1].playerId, groupName: setup.groupId.toString() },
         ]);
         pairs.push([
-          { id: setup.entrants[1].playerId, groupName: setup.groupId.toString() },
+          { id: setup.entrants[2].playerId, groupName: setup.groupId.toString() },
           { id: setup.entrants[0].playerId, groupName: setup.groupId.toString() },
         ]);
       }
     }
     if (setup.entrants.length === 3) {
-      // type 3
+      // type 1
       if (["A", "B", "C", "D"].includes(setup.groupId)) {
+        pairs.push([
+          { id: setup.entrants[2].playerId, groupName: setup.groupId.toString() },
+          { id: setup.entrants[1].playerId, groupName: setup.groupId.toString() },
+        ]);
+        // type 3
+      } else if (["E", "F", "G", "H"].includes(setup.groupId)) {
         pairs.push([
           { id: setup.entrants[1].playerId, groupName: setup.groupId.toString() },
           { id: setup.entrants[0].playerId, groupName: setup.groupId.toString() },
         ]);
         // type 2
-      } else if (["E", "F", "G", "H"].includes(setup.groupId)) {
-        pairs.push([
-          { id: setup.entrants[2].playerId, groupName: setup.groupId.toString() },
-          { id: setup.entrants[0].playerId, groupName: setup.groupId.toString() },
-        ]);
-        // type 1
       } else {
         pairs.push([
           { id: setup.entrants[2].playerId, groupName: setup.groupId.toString() },
-          { id: setup.entrants[1].playerId, groupName: setup.groupId.toString() },
+          { id: setup.entrants[0].playerId, groupName: setup.groupId.toString() },
         ]);
       }
     }
