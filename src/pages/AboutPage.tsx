@@ -78,6 +78,26 @@ export const AboutPage: React.FC = () => {
               also not read the #race-spoilers channel in the tournament discord during their race.
               Watching your opponent's stream is allowed.
             </ListItem>
+            <ListItem>
+              Entrants may not watch the restream of their match while they are racing. They may
+              also not read the #race-spoilers channel in the tournament discord during their race.
+              Watching your opponent's stream is allowed.
+            </ListItem>
+            <ListItem>
+              A tournament race may <strong>only</strong> be restarted:
+              <SubList>
+                <ListItem>
+                  If BingoBot did not generate a board when the race started. In this case, the
+                  entrants may restart in a new race room.
+                </ListItem>
+                <ListItem>
+                  If an entrant's game crashed for reasons out of their control (this does not
+                  include softlocks), <strong>and</strong> both entrants agree to restart. However,
+                  no entrant is obligated to accept a restart request, and no one should feel bad to
+                  just complete their race if they prefer that.
+                </ListItem>
+              </SubList>
+            </ListItem>
           </List>
 
           <h3>Scheduling & recording</h3>
@@ -195,6 +215,10 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   padding: 0.15rem 0;
+`;
+
+const SubList = styled.ul`
+  padding: 0 1rem;
 `;
 
 const SaveIcon = styled(BiSave)`
