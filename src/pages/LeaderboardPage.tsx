@@ -7,6 +7,7 @@ import { useMatchResults } from "../api/matchesApi";
 import { NothingToDisplay } from "../components/general/NothingToDisplay";
 import { leaderboardSettings } from "../Settings";
 import { RobinGroups } from "../components/pages/leaderboard/RobinGroups";
+import { Challonge } from "../components/pages/leaderboard/Challonge";
 
 export const LeaderboardPage: React.FC = () => {
   const { data: allEntrants, isLoading: isLoadingEntrants } = useAllEntrants();
@@ -40,6 +41,7 @@ export const LeaderboardPage: React.FC = () => {
 
   return (
     <>
+      <Challonge />
       <RobinGroups allEntrants={allEntrants} allResults={matchResults} />
       {/*<RobinPots allEntrants={allEntrants} />*/}
 
