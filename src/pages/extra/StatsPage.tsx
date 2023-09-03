@@ -42,10 +42,17 @@ export const StatsPage: React.FC = () => {
     ? matchResults.filter((matchResult) => matchResult.round === round)
     : matchResults;
 
-  const { best, worst, bestDiff, worstDiff, closestMatch, average, median, playerTimes } = getStats(
-    results,
-    racetimeLeaderboard
-  );
+  const {
+    best,
+    worst,
+    bestLosing,
+    bestDiff,
+    worstDiff,
+    closestMatch,
+    average,
+    median,
+    playerTimes,
+  } = getStats(results, racetimeLeaderboard);
 
   return (
     <Container title={title}>
@@ -66,6 +73,10 @@ export const StatsPage: React.FC = () => {
           <Heading>Worst result</Heading>
           {worst && <ResultRow entrant={worst.entrant} />}
           <RtggButton match={worst?.match} />
+
+          <Heading>Best losing result</Heading>
+          {bestLosing && <ResultRow entrant={bestLosing.entrant} />}
+          <RtggButton match={bestLosing?.match} />
 
           <Heading>Best diff</Heading>
           {bestDiff && (
@@ -163,6 +174,7 @@ const getStats = (results: MatchResult[], racetimeLeaderboard: RacetimeLeaderboa
   type Diff = { entrant: EntrantWithResult; lbEntry: RacetimeLeaderboardEntry; percentage: number };
   let bestResult: { match: Match; entrant: EntrantWithResult } | undefined;
   let worstResult: { match: Match; entrant: EntrantWithResult } | undefined;
+  let bestLosingResult: { match: Match; entrant: EntrantWithResult } | undefined;
   let bestDiff: { match: Match; diff: Diff } | undefined;
   let worstDiff: { match: Match; diff: Diff } | undefined;
   let closestMatch: { match: MatchResult; diff: number } | undefined;
@@ -201,6 +213,13 @@ const getStats = (results: MatchResult[], racetimeLeaderboard: RacetimeLeaderboa
       if (!worstResult || entrant.result.finishTime! > worstResult.entrant.result.finishTime!) {
         worstResult = { match: result, entrant: entrant };
       }
+      if (
+        !bestLosingResult ||
+        (entrant.result.resultStatus === "loss" &&
+          entrant.result.finishTime > bestLosingResult.entrant.result.finishTime!)
+      ) {
+        bestLosingResult = { match: result, entrant: entrant };
+      }
 
       const matchingLbEntry: RacetimeLeaderboardEntry | undefined =
         racetimeLeaderboard[entrant.user.id];
@@ -237,6 +256,7 @@ const getStats = (results: MatchResult[], racetimeLeaderboard: RacetimeLeaderboa
   return {
     best: bestResult,
     worst: worstResult,
+    bestLosing: bestLosingResult,
     bestDiff,
     worstDiff,
     closestMatch,
