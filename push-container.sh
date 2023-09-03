@@ -6,7 +6,7 @@ rm -rf build
 npm set //npm.pkg.github.com/:_authToken=$2
 
 echo "Upgrade NPM..."
-npm install -g npm@latest
+npm install -g npm@9
 echo "npm install"
 npm install || exit 1
 echo "npm run build"

@@ -13,6 +13,6 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 18
       - name: Build and Push Docker Image
         run: ./push-container.sh ${{ github.actor }} ${{ secrets.GITHUB_TOKEN }}
