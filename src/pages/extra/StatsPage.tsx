@@ -11,8 +11,12 @@ import { Duration } from "luxon";
 import styled from "styled-components";
 import { useUser } from "../../api/userApi";
 import { NothingToDisplay } from "../../components/general/NothingToDisplay";
-import { isAdmin } from "../../domain/User";
+import { isAdmin, User } from "../../domain/User";
 import { RacetimeButton } from "../../components/forms/buttons/RacetimeButton";
+import { tournamentSettings } from "../../Settings";
+import { calculateAverage, calculateMedian, secondsToHms } from "../../lib/timeHelpers";
+import { UserDisplay } from "../../components/UserDisplay";
+import { FlexDiv } from "../../components/divs/FlexDiv";
 
 export const StatsPage: React.FC = () => {
   const [round, setRound] = useState<string>("");
@@ -37,7 +41,8 @@ export const StatsPage: React.FC = () => {
   const results = round
     ? matchResults.filter((matchResult) => matchResult.round === round)
     : matchResults;
-  const { best, worst, bestDiff, worstDiff, closestMatch, average } = getStats(
+
+  const { best, worst, bestDiff, worstDiff, closestMatch, average, median, playerTimes } = getStats(
     results,
     racetimeLeaderboard
   );
@@ -54,21 +59,21 @@ export const StatsPage: React.FC = () => {
 
       {results.length > 0 && (
         <>
-          <Header>Best result</Header>
+          <Heading>Best result</Heading>
           {best && <ResultRow entrant={best.entrant} />}
           <RtggButton match={best?.match} />
 
-          <Header>Worst result</Header>
+          <Heading>Worst result</Heading>
           {worst && <ResultRow entrant={worst.entrant} />}
           <RtggButton match={worst?.match} />
 
-          <Header>Best diff</Header>
+          <Heading>Best diff</Heading>
           {bestDiff && (
             <>
               <ResultRow entrant={bestDiff.diff.entrant} />
-              {`Current bingo leaderboard time: ${Duration.fromMillis(
-                bestDiff.diff.lbEntry.leaderboardTime * 1000
-              ).toFormat("h:mm:ss")}`}
+              {`Current bingo leaderboard time: ${secondsToHms(
+                bestDiff.diff.lbEntry.leaderboardTime
+              )}`}
               <p>{`Finish time ${Math.abs(
                 Math.round(bestDiff.diff.percentage * 1000) / 10
               )}% faster than lb time`}</p>
@@ -76,7 +81,7 @@ export const StatsPage: React.FC = () => {
             </>
           )}
 
-          <Header>Worst diff</Header>
+          <Heading>Worst diff</Heading>
           {worstDiff && (
             <>
               <ResultRow entrant={worstDiff.diff.entrant} />
@@ -90,19 +95,64 @@ export const StatsPage: React.FC = () => {
             </>
           )}
 
-          <Header>Closest match diff</Header>
+          <Heading>Closest match diff</Heading>
           {!!closestMatch && closestMatch.match.entrants.length >= 2 && (
             <>
               <ResultRow entrant={closestMatch.match.entrants[0]} />
               <ResultRow entrant={closestMatch.match.entrants[1]} />
 
-              {`Difference: ${Duration.fromMillis(closestMatch.diff * 1000).toFormat("h:mm:ss")}`}
+              {`Difference: ${secondsToHms(closestMatch.diff)}`}
               <RtggButton match={closestMatch.match} />
             </>
           )}
 
-          <Header>Average</Header>
-          <>{Duration.fromMillis(average * 1000).toFormat("h:mm:ss")}</>
+          <Heading>Average</Heading>
+          {secondsToHms(average)}
+
+          <Heading>Median</Heading>
+          {secondsToHms(median)}
+
+          <Row>
+            <div>
+              <Heading>Player medians</Heading>
+              {playerTimes
+                .sort(
+                  (a, b) =>
+                    (a.median ?? tournamentSettings.FORFEIT_TIME) -
+                    (b.median ?? tournamentSettings.FORFEIT_TIME)
+                )
+                .map((playerStats) => {
+                  if (playerStats.median) {
+                    return (
+                      <Row>
+                        <UserDisplay user={playerStats.player} />
+                        <p>{secondsToHms(playerStats.median)}</p>
+                      </Row>
+                    );
+                  }
+                })}
+            </div>
+
+            <div>
+              <Heading>Player averages</Heading>
+              {playerTimes
+                .sort(
+                  (a, b) =>
+                    (a.average ?? tournamentSettings.FORFEIT_TIME) -
+                    (b.average ?? tournamentSettings.FORFEIT_TIME)
+                )
+                .map((playerStats) => {
+                  if (playerStats.average) {
+                    return (
+                      <Row>
+                        <UserDisplay user={playerStats.player} />
+                        <p>{secondsToHms(playerStats.average)}</p>
+                      </Row>
+                    );
+                  }
+                })}
+            </div>
+          </Row>
         </>
       )}
     </Container>
@@ -117,7 +167,8 @@ const getStats = (results: MatchResult[], racetimeLeaderboard: RacetimeLeaderboa
   let worstDiff: { match: Match; diff: Diff } | undefined;
   let closestMatch: { match: MatchResult; diff: number } | undefined;
 
-  const allTimes: number[] = [];
+  const allFinishedTimes: number[] = [];
+  const timesPerPlayer: Record<string, { player: User; times: number[] }> = {};
 
   for (const result of results) {
     const times = result.entrants
@@ -131,8 +182,14 @@ const getStats = (results: MatchResult[], racetimeLeaderboard: RacetimeLeaderboa
     }
 
     for (const entrant of result.entrants) {
+      const finishOrForfeitTime = entrant.result.finishTime ?? tournamentSettings.FORFEIT_TIME;
+      if (!(entrant.user.id in timesPerPlayer)) {
+        timesPerPlayer[entrant.user.id] = { player: entrant.user, times: [finishOrForfeitTime] };
+      }
+      timesPerPlayer[entrant.user.id].times.push(finishOrForfeitTime);
+
       if (!entrant.result.hasForfeited) {
-        allTimes.push(entrant.result.finishTime!!);
+        allFinishedTimes.push(entrant.result.finishTime!!);
       }
       if (!entrant.result.finishTime) {
         continue;
@@ -145,18 +202,19 @@ const getStats = (results: MatchResult[], racetimeLeaderboard: RacetimeLeaderboa
         worstResult = { match: result, entrant: entrant };
       }
 
-      const matchingLbEntry = racetimeLeaderboard[entrant.user.id];
+      const matchingLbEntry: RacetimeLeaderboardEntry | undefined =
+        racetimeLeaderboard[entrant.user.id];
       const percentage =
-        (entrant.result.finishTime - matchingLbEntry.leaderboardTime) /
-        matchingLbEntry.leaderboardTime;
+        (entrant.result.finishTime - (matchingLbEntry?.leaderboardTime ?? NaN)) /
+        (matchingLbEntry?.leaderboardTime ?? NaN);
 
-      if (!bestDiff || percentage < bestDiff.diff.percentage) {
+      if (percentage && (!bestDiff || percentage < bestDiff.diff.percentage)) {
         bestDiff = {
           match: result,
           diff: { entrant: entrant, lbEntry: matchingLbEntry, percentage: percentage },
         };
       }
-      if (!worstDiff || percentage > worstDiff.diff.percentage) {
+      if (percentage && (!worstDiff || percentage > worstDiff.diff.percentage)) {
         worstDiff = {
           match: result,
           diff: { entrant: entrant, lbEntry: matchingLbEntry, percentage: percentage },
@@ -164,30 +222,45 @@ const getStats = (results: MatchResult[], racetimeLeaderboard: RacetimeLeaderboa
       }
     }
   }
-  let total = 0;
-  for (const time of allTimes) {
-    total += time;
-  }
-  const average = total / allTimes.length;
+
+  const average = calculateAverage(allFinishedTimes) ?? NaN;
+  const median = calculateMedian(allFinishedTimes) ?? NaN;
+
+  const playerTimes = Object.values(timesPerPlayer).map((playerAndTimes) => {
+    return {
+      ...playerAndTimes,
+      average: calculateAverage(playerAndTimes.times),
+      median: calculateMedian(playerAndTimes.times),
+    };
+  });
+
   return {
     best: bestResult,
     worst: worstResult,
-    bestDiff: bestDiff,
-    worstDiff: worstDiff,
-    closestMatch: closestMatch,
-    average: average,
+    bestDiff,
+    worstDiff,
+    closestMatch,
+    average,
+    median,
+    playerTimes,
   };
 };
 
 const RtggButton: React.FC<{ match?: Match }> = ({ match }) => {
-  return match ? <RacetimeButtonStyled url={`https://racetime.gg/${match.racetimeId}`} /> : <></>;
+  return match ? <RacetimeButtonStyled url={`https://racetime.gg/${match.racetimeId}`} /> : null;
 };
 
-const Header = styled.h3`
+const Heading = styled.h3`
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
 `;
 
 const RacetimeButtonStyled = styled(RacetimeButton)`
   max-width: 2rem;
+`;
+
+const Row = styled(FlexDiv)`
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 2rem;
 `;
