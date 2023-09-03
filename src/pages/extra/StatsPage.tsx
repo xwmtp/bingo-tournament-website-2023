@@ -17,6 +17,7 @@ import { tournamentSettings } from "../../Settings";
 import { calculateAverage, calculateMedian, secondsToHms } from "../../lib/timeHelpers";
 import { UserDisplay } from "../../components/UserDisplay";
 import { FlexDiv } from "../../components/divs/FlexDiv";
+import { Tooltip } from "../../components/Tooltip";
 
 export const StatsPage: React.FC = () => {
   const [round, setRound] = useState<string>("");
@@ -125,7 +126,7 @@ export const StatsPage: React.FC = () => {
 
           <Row>
             <div>
-              <Heading>Player medians</Heading>
+              <Heading>Player medians / # results / # forfeits</Heading>
               {playerTimes
                 .sort(
                   (a, b) =>
@@ -135,9 +136,15 @@ export const StatsPage: React.FC = () => {
                 .map((playerStats) => {
                   if (playerStats.median) {
                     return (
-                      <Row>
-                        <UserDisplay user={playerStats.player} />
+                      <Row key={playerStats.player.id}>
+                        <RowUserDisplay user={playerStats.player} />
                         <p>{secondsToHms(playerStats.median)}</p>
+                        <p>{playerStats.times.length}</p>
+                        <p>{playerStats.forfeits}</p>
+                        <Tooltip
+                          text={playerStats.times.map((time) => secondsToHms(time)).join(", ")}
+                          heading={`${playerStats.player.name}'s times`}
+                        />
                       </Row>
                     );
                   }
@@ -145,7 +152,7 @@ export const StatsPage: React.FC = () => {
             </div>
 
             <div>
-              <Heading>Player averages</Heading>
+              <Heading>Player averages / # results / # forfeits</Heading>
               {playerTimes
                 .sort(
                   (a, b) =>
@@ -155,9 +162,14 @@ export const StatsPage: React.FC = () => {
                 .map((playerStats) => {
                   if (playerStats.average) {
                     return (
-                      <Row>
-                        <UserDisplay user={playerStats.player} />
+                      <Row key={playerStats.player.id}>
+                        <RowUserDisplay user={playerStats.player} />
                         <p>{secondsToHms(playerStats.average)}</p>
+                        <p>{playerStats.times.length}</p>
+                        <Tooltip
+                          text={playerStats.times.map((time) => secondsToHms(time)).join(", ")}
+                          heading={`${playerStats.player.name}'s times`}
+                        />
                       </Row>
                     );
                   }
@@ -180,7 +192,7 @@ const getStats = (results: MatchResult[], racetimeLeaderboard: RacetimeLeaderboa
   let closestMatch: { match: MatchResult; diff: number } | undefined;
 
   const allFinishedTimes: number[] = [];
-  const timesPerPlayer: Record<string, { player: User; times: number[] }> = {};
+  const timesPerPlayer: Record<string, { player: User; times: number[]; forfeits: number }> = {};
 
   for (const result of results) {
     const times = result.entrants
@@ -196,13 +208,22 @@ const getStats = (results: MatchResult[], racetimeLeaderboard: RacetimeLeaderboa
     for (const entrant of result.entrants) {
       const finishOrForfeitTime = entrant.result.finishTime ?? tournamentSettings.FORFEIT_TIME;
       if (!(entrant.user.id in timesPerPlayer)) {
-        timesPerPlayer[entrant.user.id] = { player: entrant.user, times: [finishOrForfeitTime] };
+        timesPerPlayer[entrant.user.id] = {
+          player: entrant.user,
+          times: [finishOrForfeitTime],
+          forfeits: entrant.result.hasForfeited ? 1 : 0,
+        };
+      } else {
+        timesPerPlayer[entrant.user.id].times.push(finishOrForfeitTime);
+        if (entrant.result.hasForfeited) {
+          timesPerPlayer[entrant.user.id].forfeits++;
+        }
       }
-      timesPerPlayer[entrant.user.id].times.push(finishOrForfeitTime);
 
       if (!entrant.result.hasForfeited) {
         allFinishedTimes.push(entrant.result.finishTime!!);
       }
+
       if (!entrant.result.finishTime) {
         continue;
       }
@@ -216,7 +237,7 @@ const getStats = (results: MatchResult[], racetimeLeaderboard: RacetimeLeaderboa
       if (
         !bestLosingResult ||
         (entrant.result.resultStatus === "loss" &&
-          entrant.result.finishTime > bestLosingResult.entrant.result.finishTime!)
+          entrant.result.finishTime < bestLosingResult.entrant.result.finishTime!)
       ) {
         bestLosingResult = { match: result, entrant: entrant };
       }
@@ -283,4 +304,8 @@ const Row = styled(FlexDiv)`
   flex-direction: row;
   justify-content: flex-start;
   gap: 2rem;
+`;
+
+const RowUserDisplay = styled(UserDisplay)`
+  margin: 0.15rem 0;
 `;
