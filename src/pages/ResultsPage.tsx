@@ -4,11 +4,11 @@ import styled from "styled-components";
 import { Colors } from "../GlobalStyle";
 import { TabSelector } from "../components/TabSelector";
 import { MatchResults } from "../components/pages/results/MatchResults";
-import { onlyUnique } from "../lib/onlyUnique";
-import { capitalize } from "../lib/stringHelpers";
+import { onlyUniqueStringsCaseInsensitive } from "../lib/onlyUnique";
 import { useMatchResults } from "../api/matchesApi";
 import { MatchResult, sortByScheduledTime } from "../domain/Match";
 import { NothingToDisplay } from "../components/general/NothingToDisplay";
+import { notEmpty } from "../lib/notEmpty";
 
 export const ResultsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string | undefined>(undefined);
@@ -62,10 +62,9 @@ export const ResultsPage: React.FC = () => {
 
 const getUniqueRounds = (matches: MatchResult[]): string[] => {
   return sortByScheduledTime(matches)
-    .map((result) => result.round?.toLowerCase())
-    .filter((round): round is string => !!round)
-    .filter(onlyUnique)
-    .map((round) => capitalize(round));
+    .map((result) => result.round)
+    .filter(notEmpty)
+    .filter(onlyUniqueStringsCaseInsensitive);
 };
 
 const TabSelectorStyled = styled(TabSelector)`

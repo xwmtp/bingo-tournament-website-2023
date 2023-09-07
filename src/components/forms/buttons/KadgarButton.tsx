@@ -4,6 +4,7 @@ import { MdOutlineLiveTv } from "react-icons/md";
 import { IconUrlButton } from "../IconButton";
 import { User } from "../../../domain/User";
 import { extractTwitchChannel } from "../../../lib/urlHelpers";
+import { notEmpty } from "../../../lib/notEmpty";
 
 interface Props {
   users: User[];
@@ -14,7 +15,7 @@ interface Props {
 export const KadgarButton: React.FC<Props> = ({ users, text, className }) => {
   const twitchChannels = users
     .map((user) => extractTwitchChannel(user.twitchChannel ?? ""))
-    .filter((twitchChannel): twitchChannel is string => !!twitchChannel);
+    .filter(notEmpty);
 
   const url =
     twitchChannels.length > 0 ? "https://kadgar.net/live/" + twitchChannels.join("/") : undefined;
