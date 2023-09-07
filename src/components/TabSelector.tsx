@@ -79,7 +79,7 @@ const TabOptionDiv = styled.div<{
   font-size: ${({ $fontSize }) => $fontSize ?? "1.3rem"};
   display: flex;
   justify-content: center;
-  border-radius: 0.6rem;
+  border-radius: 0.45rem;
   flex-grow: 1;
   cursor: pointer;
 `;
