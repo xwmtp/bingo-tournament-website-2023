@@ -134,20 +134,21 @@ export const StatsPage: React.FC = () => {
                     (b.median ?? tournamentSettings.FORFEIT_TIME)
                 )
                 .map((playerStats) => {
-                  if (playerStats.median) {
-                    return (
-                      <Row key={playerStats.player.id}>
-                        <RowUserDisplay user={playerStats.player} />
-                        <p>{secondsToHms(playerStats.median)}</p>
-                        <p>{playerStats.times.length}</p>
-                        <p>{playerStats.forfeits}</p>
-                        <Tooltip
-                          text={playerStats.times.map((time) => secondsToHms(time)).join(", ")}
-                          heading={`${playerStats.player.name}'s times`}
-                        />
-                      </Row>
-                    );
+                  if (!playerStats.median) {
+                    return null;
                   }
+                  return (
+                    <Row key={playerStats.player.id}>
+                      <RowUserDisplay user={playerStats.player} />
+                      <p>{secondsToHms(playerStats.median)}</p>
+                      <p>{playerStats.times.length}</p>
+                      <p>{playerStats.forfeits}</p>
+                      <Tooltip
+                        text={playerStats.times.map((time) => secondsToHms(time)).join(", ")}
+                        heading={`${playerStats.player.name}'s times`}
+                      />
+                    </Row>
+                  );
                 })}
             </div>
 
@@ -160,19 +161,20 @@ export const StatsPage: React.FC = () => {
                     (b.average ?? tournamentSettings.FORFEIT_TIME)
                 )
                 .map((playerStats) => {
-                  if (playerStats.average) {
-                    return (
-                      <Row key={playerStats.player.id}>
-                        <RowUserDisplay user={playerStats.player} />
-                        <p>{secondsToHms(playerStats.average)}</p>
-                        <p>{playerStats.times.length}</p>
-                        <Tooltip
-                          text={playerStats.times.map((time) => secondsToHms(time)).join(", ")}
-                          heading={`${playerStats.player.name}'s times`}
-                        />
-                      </Row>
-                    );
+                  if (!playerStats.average) {
+                    return null;
                   }
+                  return (
+                    <Row key={playerStats.player.id}>
+                      <RowUserDisplay user={playerStats.player} />
+                      <p>{secondsToHms(playerStats.average)}</p>
+                      <p>{playerStats.times.length}</p>
+                      <Tooltip
+                        text={playerStats.times.map((time) => secondsToHms(time)).join(", ")}
+                        heading={`${playerStats.player.name}'s times`}
+                      />
+                    </Row>
+                  );
                 })}
             </div>
           </Row>

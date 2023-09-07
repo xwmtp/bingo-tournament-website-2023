@@ -3,9 +3,7 @@ import { Container } from "../../Container";
 import { Button } from "../../forms/Button";
 import styled from "styled-components";
 
-interface Props {}
-
-export const Challonge: React.FC<Props> = ({}) => {
+export const Challonge: React.FC = () => {
   return (
     <Container title="Phase 2" size="small">
       <Text>Top 24 Double Elimination Bracket</Text>
