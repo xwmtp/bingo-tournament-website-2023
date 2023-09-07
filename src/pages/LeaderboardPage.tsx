@@ -42,7 +42,7 @@ export const LeaderboardPage: React.FC = () => {
   return (
     <>
       <Challonge />
-      <RobinGroups allEntrants={allEntrants} allResults={matchResults} />
+      <RobinGroups allEntrants={allEntrants} allResults={relevantMatchResults} />
       {/*<RobinPots allEntrants={allEntrants} />*/}
 
       {/*{bracketRounds.length > 0 && <Bracket bracketRounds={bracketRounds} />}*/}

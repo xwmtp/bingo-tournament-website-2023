@@ -23,7 +23,7 @@ export const websiteSettings = {
 
 export const leaderboardSettings = {
   // list of round names, or undefined if all rounds are relevant for the leaderboard
-  RELEVANT_ROUNDS: ["Round 1", "Round 2", "Round 3", "Round 4"],
+  RELEVANT_ROUNDS: ["Round 1", "Round 2", "Round 3"],
 };
 
 // Add Bracket to LeaderboardPage, only if roundNames is non-empty
