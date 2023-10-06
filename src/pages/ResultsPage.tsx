@@ -4,11 +4,9 @@ import styled from "styled-components";
 import { Colors } from "../GlobalStyle";
 import { TabSelector } from "../components/TabSelector";
 import { MatchResults } from "../components/pages/results/MatchResults";
-import { onlyUniqueStringsCaseInsensitive } from "../lib/onlyUnique";
 import { useMatchResults } from "../api/matchesApi";
-import { MatchResult, sortByScheduledTime } from "../domain/Match";
 import { NothingToDisplay } from "../components/general/NothingToDisplay";
-import { notEmpty } from "../lib/notEmpty";
+import { getUniqueRounds } from "../domain/Match";
 
 export const ResultsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string | undefined>(undefined);
@@ -58,13 +56,6 @@ export const ResultsPage: React.FC = () => {
       <MatchResults results={tabMatches} highlightUserResult={true} />
     </Container>
   );
-};
-
-const getUniqueRounds = (matches: MatchResult[]): string[] => {
-  return sortByScheduledTime(matches)
-    .map((result) => result.round)
-    .filter(notEmpty)
-    .filter(onlyUniqueStringsCaseInsensitive);
 };
 
 const TabSelectorStyled = styled(TabSelector)`

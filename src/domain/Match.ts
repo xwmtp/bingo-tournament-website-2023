@@ -5,6 +5,8 @@ import { Match as MatchDto } from "@xwmtp/bingo-tournament/dist/models/Match";
 import { EntrantState, MatchState } from "@xwmtp/bingo-tournament";
 import { Entrant as EntrantDto } from "@xwmtp/bingo-tournament/dist/models/Entrant";
 import { tournamentSettings } from "../Settings";
+import { notEmpty } from "../lib/notEmpty";
+import { onlyUniqueStringsCaseInsensitive } from "../lib/onlyUnique";
 
 interface BaseMatch<T extends Entrant> {
   id: string;
@@ -175,4 +177,11 @@ const calculateRanks = (allEntrantDtos: EntrantDto[]) => {
   }
 
   return ranksByEntrantId;
+};
+
+export const getUniqueRounds = (matches: MatchResult[]): string[] => {
+  return sortByScheduledTime(matches)
+    .map((result) => result.round)
+    .filter(notEmpty)
+    .filter(onlyUniqueStringsCaseInsensitive);
 };

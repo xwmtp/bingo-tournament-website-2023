@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useMatchResults } from "../../api/matchesApi";
-import { Match, MatchResult } from "../../domain/Match";
+import { getUniqueRounds, Match, MatchResult } from "../../domain/Match";
 import { EntrantWithResult } from "../../domain/Entrant";
 import { ResultRow } from "../../components/pages/results/ResultBlock";
 import { Container } from "../../components/Container";
-import { Input } from "../../components/forms/Input";
 import { useRacetimeLeaderboard } from "../../api/racetimeLeaderboardApi";
 import { RacetimeLeaderboard, RacetimeLeaderboardEntry } from "../../domain/RacetimeLeaderboard";
 import { Duration } from "luxon";
@@ -18,14 +17,17 @@ import { calculateAverage, calculateMedian, secondsToHms } from "../../lib/timeH
 import { UserDisplay } from "../../components/UserDisplay";
 import { FlexDiv } from "../../components/divs/FlexDiv";
 import { Tooltip } from "../../components/Tooltip";
+import { Button } from "../../components/forms/Button";
+import { Spinner } from "../../components/general/Spinner";
 
 export const StatsPage: React.FC = () => {
-  const [round, setRound] = useState<string>("");
+  // saved in lowercase
+  const [selectedRounds, setSelectedRounds] = useState<string[]>([]);
 
   const title = "Stats";
-  const { data: user } = useUser();
-  const { data: matchResults } = useMatchResults();
-  const { data: racetimeLeaderboard } = useRacetimeLeaderboard();
+  const { data: user, isLoading: isLoadingUser } = useUser();
+  const { data: matchResults, isLoading: isLoadingResults } = useMatchResults();
+  const { data: racetimeLeaderboard, isLoading: isLoadingRacetime } = useRacetimeLeaderboard();
 
   if (!user || !isAdmin(user)) {
     return (
@@ -35,13 +37,22 @@ export const StatsPage: React.FC = () => {
     );
   }
 
+  if (isLoadingResults || isLoadingRacetime || isLoadingUser) {
+    return (
+      <Container title={title}>
+        <Spinner />
+      </Container>
+    );
+  }
+
   if (!matchResults || !racetimeLeaderboard) {
     return <Container title={title} />;
   }
 
-  const results = round
-    ? matchResults.filter((matchResult) => matchResult.round === round)
-    : matchResults;
+  const uniqueRounds = getUniqueRounds(matchResults);
+  const results = matchResults.filter(
+    (matchResult) => !!matchResult.round && selectedRounds.includes(matchResult.round.toLowerCase())
+  );
 
   const {
     best,
@@ -57,13 +68,24 @@ export const StatsPage: React.FC = () => {
 
   return (
     <Container title={title}>
-      <Input
-        type="text"
-        maxLength={30}
-        value={round}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setRound(event.target.value)}
-        placeholder={"Round x"}
-      />
+      <RoundButtons>
+        {uniqueRounds.map((round) => {
+          const roundName = round.toLowerCase();
+          return (
+            <RoundButton
+              name={round}
+              isSelected={selectedRounds.includes(roundName)}
+              onClick={() => {
+                if (selectedRounds.includes(roundName)) {
+                  setSelectedRounds((prev) => prev.filter((prevRound) => prevRound !== roundName));
+                } else {
+                  setSelectedRounds((prev) => [...prev, roundName]);
+                }
+              }}
+            />
+          );
+        })}
+      </RoundButtons>
 
       {results.length > 0 && (
         <>
@@ -293,6 +315,18 @@ const RtggButton: React.FC<{ match?: Match }> = ({ match }) => {
   return match ? <RacetimeButtonStyled url={`https://racetime.gg/${match.racetimeId}`} /> : null;
 };
 
+const RoundButton: React.FC<{ name: string; isSelected: boolean; onClick: () => void }> = ({
+  name,
+  isSelected,
+  onClick,
+}) => {
+  return (
+    <RoundButtonStyled color={isSelected ? "mediumPrimary" : "darkGrey"} onClick={onClick}>
+      {name}
+    </RoundButtonStyled>
+  );
+};
+
 const Heading = styled.h3`
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
@@ -310,4 +344,13 @@ const Row = styled(FlexDiv)`
 
 const RowUserDisplay = styled(UserDisplay)`
   margin: 0.15rem 0;
+`;
+
+const RoundButtons = styled(FlexDiv)`
+  margin-top: 0.8rem;
+  gap: 1rem;
+`;
+
+const RoundButtonStyled = styled(Button)`
+  flex-grow: 0;
 `;
