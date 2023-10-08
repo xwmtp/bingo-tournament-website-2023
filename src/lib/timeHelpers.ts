@@ -22,7 +22,17 @@ export const calculateAverage = (timesInSeconds: number[]): number | undefined =
   return timesInSeconds.reduce((a, b) => a + b, 0) / timesInSeconds.length;
 };
 
+export const calculateBest = (timesInSeconds: number[]): number | undefined => {
+  if (timesInSeconds.length === 0) {
+    return undefined;
+  }
+  return Math.min.apply(null, timesInSeconds);
+};
+
 export const secondsToHms = (seconds: number): string => {
+  if (isNaN(seconds)) {
+    return "NaN";
+  }
   return Duration.fromObject({ seconds: seconds }).toFormat("h:mm:ss");
 };
 

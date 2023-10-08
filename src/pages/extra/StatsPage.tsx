@@ -13,16 +13,23 @@ import { NothingToDisplay } from "../../components/general/NothingToDisplay";
 import { isAdmin, User } from "../../domain/User";
 import { RacetimeButton } from "../../components/forms/buttons/RacetimeButton";
 import { tournamentSettings } from "../../Settings";
-import { calculateAverage, calculateMedian, secondsToHms } from "../../lib/timeHelpers";
+import {
+  calculateAverage,
+  calculateBest,
+  calculateMedian,
+  secondsToHms,
+} from "../../lib/timeHelpers";
 import { UserDisplay } from "../../components/UserDisplay";
 import { FlexDiv } from "../../components/divs/FlexDiv";
 import { Tooltip } from "../../components/Tooltip";
 import { Button } from "../../components/forms/Button";
 import { Spinner } from "../../components/general/Spinner";
+import { TabSelector } from "../../components/TabSelector";
 
 export const StatsPage: React.FC = () => {
   // saved in lowercase
   const [selectedRounds, setSelectedRounds] = useState<string[]>([]);
+  const [ignoreForfeits, setIgnoreForfeits] = useState<boolean>(false);
 
   const title = "Stats";
   const { data: user, isLoading: isLoadingUser } = useUser();
@@ -64,7 +71,7 @@ export const StatsPage: React.FC = () => {
     average,
     median,
     playerTimes,
-  } = getStats(results, racetimeLeaderboard);
+  } = getStats(results, racetimeLeaderboard, ignoreForfeits);
 
   return (
     <Container title={title}>
@@ -140,6 +147,23 @@ export const StatsPage: React.FC = () => {
             </>
           )}
 
+          <Spacer />
+
+          <Row>
+            <p>{`For stats below, include forfeits (as ${secondsToHms(
+              tournamentSettings.FORFEIT_TIME
+            )})?`}</p>
+            <TabSelector
+              activeTab={ignoreForfeits ? "Ignore" : "Include"}
+              setActiveTab={(value) => {
+                setIgnoreForfeits(value === "Ignore");
+              }}
+              fontSize={"1rem"}
+              width="12rem"
+              tabOptions={["Include", "Ignore"]}
+            />
+          </Row>
+
           <Heading>Average</Heading>
           {secondsToHms(average)}
 
@@ -191,6 +215,34 @@ export const StatsPage: React.FC = () => {
                       <RowUserDisplay user={playerStats.player} />
                       <p>{secondsToHms(playerStats.average)}</p>
                       <p>{playerStats.times.length}</p>
+                      <p>{playerStats.forfeits}</p>
+                      <Tooltip
+                        text={playerStats.times.map((time) => secondsToHms(time)).join(", ")}
+                        heading={`${playerStats.player.name}'s times`}
+                      />
+                    </Row>
+                  );
+                })}
+            </div>
+
+            <div>
+              <Heading>Player bests / # results / # forfeits</Heading>
+              {playerTimes
+                .sort(
+                  (a, b) =>
+                    (a.best ?? tournamentSettings.FORFEIT_TIME) -
+                    (b.best ?? tournamentSettings.FORFEIT_TIME)
+                )
+                .map((playerStats) => {
+                  if (!playerStats.best) {
+                    return null;
+                  }
+                  return (
+                    <Row key={playerStats.player.id}>
+                      <RowUserDisplay user={playerStats.player} />
+                      <p>{secondsToHms(playerStats.best)}</p>
+                      <p>{playerStats.times.length}</p>
+                      <p>{playerStats.forfeits}</p>
                       <Tooltip
                         text={playerStats.times.map((time) => secondsToHms(time)).join(", ")}
                         heading={`${playerStats.player.name}'s times`}
@@ -206,7 +258,11 @@ export const StatsPage: React.FC = () => {
   );
 };
 
-const getStats = (results: MatchResult[], racetimeLeaderboard: RacetimeLeaderboard) => {
+const getStats = (
+  results: MatchResult[],
+  racetimeLeaderboard: RacetimeLeaderboard,
+  ignoreForfeits: boolean
+) => {
   type Diff = { entrant: EntrantWithResult; lbEntry: RacetimeLeaderboardEntry; percentage: number };
   let bestResult: { match: Match; entrant: EntrantWithResult } | undefined;
   let worstResult: { match: Match; entrant: EntrantWithResult } | undefined;
@@ -231,21 +287,22 @@ const getStats = (results: MatchResult[], racetimeLeaderboard: RacetimeLeaderboa
 
     for (const entrant of result.entrants) {
       const finishOrForfeitTime = entrant.result.finishTime ?? tournamentSettings.FORFEIT_TIME;
+      const includeTime = !ignoreForfeits || !entrant.result.hasForfeited;
       if (!(entrant.user.id in timesPerPlayer)) {
         timesPerPlayer[entrant.user.id] = {
           player: entrant.user,
-          times: [finishOrForfeitTime],
+          times: includeTime ? [finishOrForfeitTime] : [],
           forfeits: entrant.result.hasForfeited ? 1 : 0,
         };
       } else {
-        timesPerPlayer[entrant.user.id].times.push(finishOrForfeitTime);
+        includeTime && timesPerPlayer[entrant.user.id].times.push(finishOrForfeitTime);
         if (entrant.result.hasForfeited) {
           timesPerPlayer[entrant.user.id].forfeits++;
         }
       }
 
-      if (!entrant.result.hasForfeited) {
-        allFinishedTimes.push(entrant.result.finishTime!!);
+      if (includeTime) {
+        allFinishedTimes.push(finishOrForfeitTime);
       }
 
       if (!entrant.result.finishTime) {
@@ -295,6 +352,7 @@ const getStats = (results: MatchResult[], racetimeLeaderboard: RacetimeLeaderboa
       ...playerAndTimes,
       average: calculateAverage(playerAndTimes.times),
       median: calculateMedian(playerAndTimes.times),
+      best: calculateBest(playerAndTimes.times),
     };
   });
 
@@ -321,7 +379,11 @@ const RoundButton: React.FC<{ name: string; isSelected: boolean; onClick: () => 
   onClick,
 }) => {
   return (
-    <RoundButtonStyled color={isSelected ? "mediumPrimary" : "darkGrey"} onClick={onClick}>
+    <RoundButtonStyled
+      key={name}
+      color={isSelected ? "mediumPrimary" : "darkGrey"}
+      onClick={onClick}
+    >
       {name}
     </RoundButtonStyled>
   );
@@ -339,6 +401,7 @@ const RacetimeButtonStyled = styled(RacetimeButton)`
 const Row = styled(FlexDiv)`
   flex-direction: row;
   justify-content: flex-start;
+  flex-wrap: wrap;
   gap: 2rem;
 `;
 
@@ -353,4 +416,8 @@ const RoundButtons = styled(FlexDiv)`
 
 const RoundButtonStyled = styled(Button)`
   flex-grow: 0;
+`;
+
+const Spacer = styled.div`
+  height: 2rem;
 `;
