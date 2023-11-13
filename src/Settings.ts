@@ -9,6 +9,7 @@ export const tournamentSettings = {
   WIN_POINTS: 3,
   TIE_POINTS: 1,
   LOSE_POINTS: 0,
+  TOURNAMENT_WINNER_ID: "wNZ1KRBOV8W4qAyj",
 } as const;
 
 export const websiteSettings = {

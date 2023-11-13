@@ -6,7 +6,7 @@ import { truncateString } from "../lib/stringHelpers";
 import { FlexDiv } from "./divs/FlexDiv";
 import { WideScreenOnly } from "./divs/WideScreenOnly";
 
-type Size = "big" | "normal" | "small";
+type Size = "huge" | "big" | "normal" | "small";
 
 interface Props {
   user: User;
@@ -53,6 +53,10 @@ export const UserDisplay: React.FC<Props> = ({
 const sizeSettings: {
   [size in Size]: { avatar: number; font: number };
 } = {
+  huge: {
+    avatar: 3,
+    font: 1.5,
+  },
   big: {
     avatar: 2.1,
     font: 1,

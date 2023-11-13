@@ -1,13 +1,13 @@
 import React from "react";
-import { Leaderboard } from "../components/pages/leaderboard/Leaderboard";
 import { Container } from "../components/Container";
 import { Spinner } from "../components/general/Spinner";
 import { useAllEntrants } from "../api/entrantsApi";
 import { useMatchResults } from "../api/matchesApi";
 import { NothingToDisplay } from "../components/general/NothingToDisplay";
-import { leaderboardSettings } from "../Settings";
+import { leaderboardSettings, tournamentSettings } from "../Settings";
 import { RobinGroups } from "../components/pages/leaderboard/RobinGroups";
 import { Challonge } from "../components/pages/leaderboard/Challonge";
+import { Winner } from "../components/pages/leaderboard/Winner";
 
 export const LeaderboardPage: React.FC = () => {
   const { data: allEntrants, isLoading: isLoadingEntrants } = useAllEntrants();
@@ -39,8 +39,13 @@ export const LeaderboardPage: React.FC = () => {
   );
   // const bracketRounds = parseToBracketRounds(bracketSetupData, allEntrants, matchResults);
 
+  const winner = allEntrants.find(
+    (entrant) => entrant.id === tournamentSettings.TOURNAMENT_WINNER_ID
+  );
+
   return (
     <>
+      {winner && <Winner winner={winner} />}
       <Challonge />
       <RobinGroups allEntrants={allEntrants} allResults={relevantMatchResults} />
       {/*<RobinPots allEntrants={allEntrants} />*/}
