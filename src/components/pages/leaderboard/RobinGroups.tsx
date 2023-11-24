@@ -22,7 +22,7 @@ export const RobinGroups: React.FC<Props> = ({ allEntrants, allResults }) => {
   const { data: user } = useUser();
   const { data: racetimeLeaderboard } = useRacetimeLeaderboard();
 
-  const title = "Phase 1";
+  const title = "Phase 1 - Round Robin";
 
   const groups = toRobinGroupEntries(
     robinGroupsSetup,
@@ -60,10 +60,7 @@ export const RobinGroups: React.FC<Props> = ({ allEntrants, allResults }) => {
 
               {group.entries.map((entry, index) => {
                 return (
-                  <GroupEntry
-                    key={index}
-                    $displayAsLoggedInUser={!!user && entry.user.id === user.id}
-                  >
+                  <GroupEntry key={index} $displayAsLoggedInUser={index <= 1}>
                     <RankAndUser>
                       <Rank>{index + 1}</Rank>
                       <UserDisplay size="big" user={entry.user} />

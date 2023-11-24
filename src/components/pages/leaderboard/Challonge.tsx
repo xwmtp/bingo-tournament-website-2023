@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 export const Challonge: React.FC = () => {
   return (
-    <Container title="Phase 2" size="small">
+    <Container title="Phase 2 - Bracket">
       <Text>Top 24 Double Elimination Bracket</Text>
       <LinkButton href="https://challonge.com/bingo2023" size="big" color="mediumPrimary">
         Go to Challonge
