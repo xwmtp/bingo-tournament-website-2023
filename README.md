@@ -1,5 +1,7 @@
 # Bingo Tournament Website
 
+Now that the tournament is over, you can view the static website with the results at https://xwmtp.github.io/bingo2023
+
 ## Install
 
 On [Github.com](https://github.com), go to `Settings` -> `Developer Settings` -> `Personal access tokens`.
