@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/bingo2023/static/js/main.b05b172d.js",
+    "main.js": "/bingo2023/static/js/main.8f2afcee.js",
     "static/media/racetimeGG-favicon.svg": "/bingo2023/static/media/racetimeGG-favicon.f1367b69c3a8f360768d1edf4a6bafd5.svg",
     "index.html": "/bingo2023/index.html",
-    "main.b05b172d.js.map": "/bingo2023/static/js/main.b05b172d.js.map"
+    "main.8f2afcee.js.map": "/bingo2023/static/js/main.8f2afcee.js.map"
   },
   "entrypoints": [
-    "static/js/main.b05b172d.js"
+    "static/js/main.8f2afcee.js"
   ]
 }
