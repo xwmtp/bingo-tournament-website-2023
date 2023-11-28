@@ -1302,6 +1302,7 @@ export const matchesResponse: Match[] = [
       avatar: "https://racetime.gg/media/Link-1.png",
       twitchChannel: "https://www.twitch.tv/link__11",
     },
+    vodUrl: "https://youtu.be/BXbzHuu5FiE",
   },
   {
     id: "78d77f47-e5bf-4d69-82e5-a1597fbcb68e",
@@ -1345,6 +1346,7 @@ export const matchesResponse: Match[] = [
       avatar: "https://racetime.gg/media/Link-1.png",
       twitchChannel: "https://www.twitch.tv/link__11",
     },
+    vodUrl: "https://youtu.be/BXbzHuu5FiE",
   },
   {
     id: "77ec3c9f-7547-425b-bf08-6f100e6cd98b",
@@ -3795,7 +3797,6 @@ export const matchesResponse: Match[] = [
       avatar: "https://racetime.gg/media/gator2gif.gif",
       twitchChannel: "https://www.twitch.tv/nallesounds",
     },
-    vodUrl: "https://youtu.be/CjMsQswruag",
   },
   {
     id: "52d0d375-a885-4589-ae5a-32b16666f9fc",
@@ -3906,6 +3907,7 @@ export const matchesResponse: Match[] = [
       avatar: "https://racetime.gg/media/Link-1.png",
       twitchChannel: "https://www.twitch.tv/link__11",
     },
+    vodUrl: "https://youtu.be/T3IfY0oWMGY",
   },
   {
     id: "d86ed642-4f6a-4b44-885a-4078eac90867",
@@ -3991,6 +3993,7 @@ export const matchesResponse: Match[] = [
       avatar: "https://racetime.gg/media/Link-1.png",
       twitchChannel: "https://www.twitch.tv/link__11",
     },
+    vodUrl: "https://youtu.be/ix65L71qa10",
   },
   {
     id: "4309086b-ae51-4518-b5c9-918c38e678ce",
@@ -4313,5 +4316,6 @@ export const matchesResponse: Match[] = [
       avatar: "https://racetime.gg/media/Link-1.png",
       twitchChannel: "https://www.twitch.tv/link__11",
     },
+    vodUrl: "https://youtu.be/VB1p30Pcpmo",
   },
 ];
